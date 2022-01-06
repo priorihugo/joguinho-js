@@ -9,6 +9,8 @@ export default class Cena {
         this.ch = canvas.heigh;
         this.ctx = canvas.getContext("2d");
         this.sprites = [];
+        this.t0 = null;
+        this.dt = null;
 
     }
     desenhar(){
@@ -23,6 +25,18 @@ export default class Cena {
     }
     adicionar(sprite){
         this.sprites.push(sprite);
+    }
+    passo(dt){
+        for (const sprite of this.sprites) {
+            sprite.passo(dt);        
+        }
+    }
+    quadro(t){
+        this.t0 = this.t0 ?? t;
+        this.dt = ( t - this.t0) / 1000;
+
+        this.passo(this.dt);
+        this.desenhar();
     }
 
 }

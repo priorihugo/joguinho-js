@@ -10,8 +10,8 @@ canvas.height = 300;
 canvas.width = 500;
 
 const c1 = new Cena(canvas);
-const pc = new Sprite({x: 20 , y:10 , vx : 1});
-const en = new Sprite({x: 20 , y:80 , color: "red" , vx: 1})
+const pc = new Sprite({x: 20 , y:10 , vx : 300});
+const en = new Sprite({x: 20 , y:80 , color: "red" , vx: 300})
 
 c1.adicionar(pc);
 c1.adicionar(en);

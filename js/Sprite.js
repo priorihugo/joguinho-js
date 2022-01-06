@@ -15,9 +15,22 @@ export default class Sprite{
 
         ctx.fillStyle = this.color;
         ctx.fillRect( this.x , this.y , this.w , this.h);
+
+        
     }
     passo(dt){
+        if(this.x > 1000) this.x = 0;
+
+        if(this.y > 600) this.y = 0;
         this.x = this.x + this.vx * dt
         this.y = this.y + this.vy * dt
+        console.log("[dt] " + dt)
+    }
+    colisaoCom(outro){
+        return !((this.x > outro.x + outro.w) ||
+                 (this.x + this.w < outro.x) ||
+                 (this.y > outro.y + outro.h) ||
+                 (this.y + this.h < outro.y)
+                )
     }
 }

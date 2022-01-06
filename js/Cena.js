@@ -40,6 +40,8 @@ export default class Cena {
         this.desenhar();
 
         this.iniciar();
+
+        this.t0 = t;
     }
     iniciar(){
         this.idAnim = requestAnimationFrame(
@@ -48,6 +50,10 @@ export default class Cena {
     }
     parar(){
         cancelAnimationFrame(this.idAnim);
+    }
+
+    colisao(){
+
     }
 
 }

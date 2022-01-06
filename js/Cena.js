@@ -8,6 +8,7 @@ export default class Cena {
         this.cw = canvas.width;
         this.ch = canvas.heigh;
         this.ctx = canvas.getContext("2d");
+        this.sprites = [];
 
     }
     desenhar(){
@@ -15,6 +16,13 @@ export default class Cena {
         //console.log(this.canvas)
         this.ctx.fillStyle = "black";
         this.ctx.fillRect(0 , 0 , this.cw , this.cw);
+        for(let s = 0 ; s < this.sprites.length ; s++){
+            let sprt = this.sprites[s];
+            sprt.desenhar(this.ctx);
+        }
+    }
+    adicionar(sprite){
+        this.sprites.push(sprite);
     }
 
 }

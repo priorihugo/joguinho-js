@@ -1,15 +1,17 @@
 export default class Sprite{
 
-    constructor(){
-        this.x = 0;
-        this.y = 0;
-        this.h = 0;
-        this.w = 0;
+    constructor({x = 0 , y = 0 , h = 40 , w = 40, color = "white"} = {}){
+        this.x = x;
+        this.y = y;
+        this.h = h;
+        this.w = w;
+        this.color = color;
         
     }
-
     desenhar(ctx){
-        ctx.fillStyle = "black";
+        console.log("Desenhando sprite")
+
+        ctx.fillStyle = this.color;
         ctx.fillRect( this.x , this.y , this.w , this.h);
     }
 

@@ -11,10 +11,11 @@ export default class Cena {
         this.sprites = [];
         this.t0 = null;
         this.dt = null;
+        this.idAnim = null;
 
     }
     desenhar(){
-        console.log("Desenhando cena...")
+        //console.log("Desenhando cena...")
         //console.log(this.canvas)
         this.ctx.fillStyle = "black";
         this.ctx.fillRect(0 , 0 , this.cw , this.cw);
@@ -37,6 +38,16 @@ export default class Cena {
 
         this.passo(this.dt);
         this.desenhar();
+
+        this.iniciar();
+    }
+    iniciar(){
+        this.idAnim = requestAnimationFrame(
+            (t)=>{this.quadro(t)
+        });
+    }
+    parar(){
+        cancelAnimationFrame(this.idAnim);
     }
 
 }

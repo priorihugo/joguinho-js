@@ -17,7 +17,7 @@ export default class Sprite{
         ctx.fillRect( this.x , this.y , this.w , this.h);
     }
     passo(dt){
-        this.x = this.x + 20 * dt
-        this.y = this.y + 20 * dt
+        this.x = this.x + this.vx * dt
+        this.y = this.y + this.vy * dt
     }
 }

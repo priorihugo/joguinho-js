@@ -24,7 +24,7 @@ export default class Sprite{
         if(this.y > 600) this.y = 0;
         this.x = this.x + this.vx * dt
         this.y = this.y + this.vy * dt
-        console.log("[dt] " + dt)
+        //console.log("[dt] " + dt)
     }
     colisaoCom(outro){
         return !((this.x > outro.x + outro.w) ||

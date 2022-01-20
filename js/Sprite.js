@@ -11,17 +11,10 @@ export default class Sprite{
         
     }
     desenhar(ctx){
-        console.log("Desenhando sprite")
-
         ctx.fillStyle = this.color;
         ctx.fillRect( this.x , this.y , this.w , this.h);
-
-        
     }
     passo(dt){
-        if(this.x > 1000) this.x = 0;
-
-        if(this.y > 600) this.y = 0;
         this.x = this.x + this.vx * dt
         this.y = this.y + this.vy * dt
         //console.log("[dt] " + dt)

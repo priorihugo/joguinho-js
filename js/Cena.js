@@ -1,7 +1,7 @@
 export default class Cena {
 
     ///responsavel por desenhar elementos em tela
-    constructor(canvas){
+    constructor(canvas, assets = null){
         console.log("Criando cena...")
         console.log(canvas)
         this.canvas = canvas;
@@ -12,6 +12,7 @@ export default class Cena {
         this.t0 = null;
         this.dt = null;
         this.idAnim = null;
+        this.assets = assets;
 
     }
     desenhar(){
@@ -23,6 +24,8 @@ export default class Cena {
             let sprt = this.sprites[s];
             sprt.desenhar(this.ctx);
         }
+        this.ctx.fillStyle = "yellow";
+        this.ctx.fillText(this.assets.progresso(), 40 , 40)
     }
     adicionar(sprite){
         this.sprites.push(sprite);

@@ -13,6 +13,19 @@ export default class Mapa{
             }
         }
     }
+    carregaMapa(modelo){
+
+        this.LINHAS = modelo.length;
+        this.COLUNAS = modelo[0]?.length ?? 0;
+        this.quadrados = [];
+        for(let l = 0 ; l < this.LINHAS ; l++){
+            this.quadrados[l] = [];
+            for(let c = 0 ; c < this.COLUNAS ; c++){
+                this.quadrados[l][c] = modelo[l][c];
+            }
+        }
+
+    }
     desenhar(ctx){
         for(let l = 0 ; l < this.LINHAS ; l++){
             for(let c = 0 ; c < this.COLUNAS ; c++){

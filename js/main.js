@@ -2,6 +2,7 @@ import AssetManager from "./AssetManager.js";
 import Cena from "./Cena.js" ;
 import Mapa from "./Mapa.js";
 import Sprite from "./Sprite.js";
+import mapa1 from "../maps/mapa1.js";
 
 
 ///canvas config
@@ -11,10 +12,11 @@ canvas.width = 14*32;
 canvas.height = 10*32;
 
 const assets = new AssetManager();
-const mapa1 = new Mapa();
+const cenario01 = new Mapa();
 
 const c1 = new Cena(canvas , assets);
-c1.configuraMapa(mapa1);
+c1.configuraMapa(cenario01);
+cenario01.carregaMapa(mapa1);
 
 const pc = new Sprite({x: 20 , y:10 , vx : 50});
 const en = new Sprite({x: 20 , y:80 , color: "red" , vx: 50})

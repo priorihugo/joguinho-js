@@ -24,6 +24,7 @@ export default class Cena {
     for (let s = 0; s < this.sprites.length; s++) {
       let sprt = this.sprites[s];
       sprt.desenhar(this.ctx);
+      sprt.aplicaRestricoes();
     }
     this.ctx.fillStyle = "yellow";
     this.ctx.fillText(this.assets.progresso(), 40, 40);
@@ -83,27 +84,29 @@ export default class Cena {
       this.aRemover.push(a);
       if(a.vx > 0){
         a.x =a.x - 1;
-      }else{
+        a.vx *= -1;
+      }else if(a.vx < 0){
         a.x = a.x + 1;
+        a.vx *= -1;
       }
       if(a.vy > 0){
         a.y += - 1;
-      }else{
+        a.vy *= -1;
+      }else if(a.vy < 0){
         a.y += + 1;
-      }
-      a.vx *= -1;
-      a.vy *= -1;
+        a.vy *= -1;
+      } 
     }
     if (!this.aRemover.includes(b)) {
       this.aRemover.push(b);
       if(b.vx > 0){
         b.x = b.x - 1;
-      }else{
+      }else if(b.vx < 0){
         b.x = b.x + 1;
       }
       if(b.vy > 0){
         b.y += - 1;
-      }else{
+      }else if(b.vy < 0){
         b.y += + 1;
       }
       b.vx *= -1;

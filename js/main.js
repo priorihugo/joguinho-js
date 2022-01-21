@@ -18,13 +18,13 @@ const c1 = new Cena(canvas , assets);
 c1.configuraMapa(cenario01);
 cenario01.carregaMapa(mapa1);
 
-const pc = new Sprite({x: 200 , y:10 , vy : 30});
-const en = new Sprite({x: 200 , y:300 , color: "red" , vy: -30})
-//const en2 = new Sprite({x: 400 , y:10 , color: "orange" ,vx: -50})
+const pc = new Sprite({x: 40 , y:50 , vx : 30 , h : 32, w : 32});
+const en = new Sprite({x: 400 , y:50 , color: "red" , vx: -30 , h: 32 , w : 32})
+const en2 = new Sprite({x: 300 , y:50 , color: "orange" ,vy: +50})
 
 c1.adicionar(pc);
 c1.adicionar(en);
-//c1.adicionar(en2);
+c1.adicionar(en2);
 
 c1.quadro(0);
 c1.iniciar();

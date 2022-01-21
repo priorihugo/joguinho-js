@@ -29,6 +29,7 @@ export default class Cena {
     this.ctx.fillText(this.assets.progresso(), 40, 40);
   }
   adicionar(sprite) {
+    sprite.cena = this;
     this.sprites.push(sprite);
   }
   passo(dt) {
@@ -85,6 +86,11 @@ export default class Cena {
       }else{
         a.x = a.x + 1;
       }
+      if(a.vy > 0){
+        a.y += - 1;
+      }else{
+        a.y += + 1;
+      }
       a.vx *= -1;
       a.vy *= -1;
     }
@@ -94,6 +100,11 @@ export default class Cena {
         b.x = b.x - 1;
       }else{
         b.x = b.x + 1;
+      }
+      if(b.vy > 0){
+        b.y += - 1;
+      }else{
+        b.y += + 1;
       }
       b.vx *= -1;
       b.vy *= -1;

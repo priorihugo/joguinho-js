@@ -33,20 +33,19 @@ export default class Mapa{
 
                     case 1:
                         ctx.fillStyle = "grey";
-                        ctx.fillRect(c*this.TAMANHO , l* this.TAMANHO , this.TAMANHO , this.TAMANHO);
                         ctx.lineWidth = 1;
-                        ctx.strokeStyle = 'black';
-                        ctx.strokeRect(c*this.TAMANHO , l* this.TAMANHO , this.TAMANHO , this.TAMANHO);
+                        ctx.strokeStyle = "black";
                         break;
 
                     default:
                         ctx.fillStyle = "black";
-                        ctx.fillRect(c*this.TAMANHO , l* this.TAMANHO , this.TAMANHO , this.TAMANHO);
                         ctx.lineWidth = 1;
-                        ctx.strokeStyle = 'red';
-                        ctx.strokeRect(c*this.TAMANHO , l* this.TAMANHO , this.TAMANHO , this.TAMANHO);
+                        ctx.strokeStyle = "grey";
                         break;
                 }
+
+                ctx.fillRect(c*this.TAMANHO , l* this.TAMANHO , this.TAMANHO , this.TAMANHO);
+                ctx.strokeRect(c*this.TAMANHO , l* this.TAMANHO , this.TAMANHO , this.TAMANHO);
             }
         }
     }

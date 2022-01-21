@@ -8,11 +8,12 @@ export default class Sprite{
         this.vx = vx;
         this.vy = vy;
         this.color = color;
+        this.cena = null;
         
     }
     desenhar(ctx){
         ctx.fillStyle = this.color;
-        ctx.fillRect( this.x , this.y , this.w , this.h);
+        ctx.fillRect( this.x - this.w/2, this.y -this.h/2 , this.w , this.h);
     }
     passo(dt){
         this.x = this.x + this.vx * dt
@@ -20,10 +21,10 @@ export default class Sprite{
         //console.log("[dt] " + dt)
     }
     colisaoCom(outro){
-        return !((this.x > outro.x + outro.w) ||
-                 (this.x + this.w < outro.x) ||
-                 (this.y > outro.y + outro.h) ||
-                 (this.y + this.h < outro.y)
+        return !((this.x - this.w/2 > outro.x + outro.w/2 + outro.w) ||
+                 (this.x + this.w/2 < outro.x - outro.w/2) ||
+                 (this.y - this.h/2 > outro.y + outro.h/2) ||
+                 (this.y + this.h/2 < outro.y - outro.h/2)
                 )
     }
 }

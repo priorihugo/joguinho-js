@@ -84,18 +84,17 @@ export default class Cena {
       this.aRemover.push(a);
       if(a.vx > 0){
         a.x =a.x - 1;
-        a.vx *= -1;
       }else if(a.vx < 0){
         a.x = a.x + 1;
-        a.vx *= -1;
       }
+
       if(a.vy > 0){
         a.y += - 1;
-        a.vy *= -1;
       }else if(a.vy < 0){
         a.y += + 1;
-        a.vy *= -1;
-      } 
+      }
+      a.vx *= -1;
+      a.vy *= -1;
     }
     if (!this.aRemover.includes(b)) {
       this.aRemover.push(b);

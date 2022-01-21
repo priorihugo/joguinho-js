@@ -50,7 +50,7 @@ export default class Sprite {
     this.restricoesCima(t, this.mx + 1, this.my - 1);
   }
   restricoesDireita(t, pmx, pmy) {
-    console.log("[pmx]" + pmx + "[pmy]" + pmy)
+    //console.log("[pmx]" + pmx + "[pmy]" + pmy)
     if (this.vx > 0) {
       if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
         const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
@@ -64,7 +64,7 @@ export default class Sprite {
     }
   }
   restricoesEsquerda(t, pmx, pmy) {
-    console.log("[pmx]" + pmx + "[pmy]" + pmy)
+    //console.log("[pmx]" + pmx + "[pmy]" + pmy)
     if (this.vx < 0) {
       if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
         const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
@@ -78,7 +78,7 @@ export default class Sprite {
     }
   }
   restricoesCima(t, pmx, pmy) {
-    console.log("[pmx]" + pmx + "[pmy]" + pmy)
+    //console.log("[pmx]" + pmx + "[pmy]" + pmy)
     if (this.vy < 0) {
       if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
         const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
@@ -92,7 +92,7 @@ export default class Sprite {
     }
   }
   restricoesBaixo(t, pmx, pmy) {
-    console.log("[pmx]" + pmx + "[pmy]" + pmy)
+    //console.log("[pmx]" + pmx + "[pmy]" + pmy)
     if (this.vy > 0) {
       if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
         const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };

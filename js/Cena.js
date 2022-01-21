@@ -1,8 +1,8 @@
 export default class Cena {
   ///responsavel por desenhar elementos em tela
   constructor(canvas, assets = null) {
-    console.log("Criando cena...");
-    console.log(canvas);
+    //console.log("Criando cena...");
+    //console.log(canvas);
     this.canvas = canvas;
     this.cw = canvas.width;
     this.ch = canvas.heigh;
@@ -47,7 +47,7 @@ export default class Cena {
       this.desenhar();
       this.checarColisao();
       //console.log(this.aRemover)
-      //this.removerSprites();
+      this.removerSprites();
 
       this.iniciar();
 
@@ -82,34 +82,9 @@ export default class Cena {
 
     if (!this.aRemover.includes(a)) {
       this.aRemover.push(a);
-      if(a.vx > 0){
-        a.x =a.x - 1;
-      }else if(a.vx < 0){
-        a.x = a.x + 1;
-      }
-
-      if(a.vy > 0){
-        a.y += - 1;
-      }else if(a.vy < 0){
-        a.y += + 1;
-      }
-      a.vx *= -1;
-      a.vy *= -1;
     }
     if (!this.aRemover.includes(b)) {
       this.aRemover.push(b);
-      if(b.vx > 0){
-        b.x = b.x - 1;
-      }else if(b.vx < 0){
-        b.x = b.x + 1;
-      }
-      if(b.vy > 0){
-        b.y += - 1;
-      }else if(b.vy < 0){
-        b.y += + 1;
-      }
-      b.vx *= -1;
-      b.vy *= -1;
     }
   }
   removerSprites(){

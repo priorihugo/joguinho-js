@@ -52,6 +52,10 @@ pc.controlar = function(dt){
    }
 }
 
+function persegue(dt){
+   this.vx = 50*Math.sign(pc.x - this.x);
+   this.vy = 50*Math.sign(pc.y - this.y);
+}
 en.controlar = persegue;
 
 c1.adicionar(pc);

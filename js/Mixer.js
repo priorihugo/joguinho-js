@@ -10,16 +10,24 @@ export default class Mixer{
         this.canais = [];
         this.n_canais = nCanais;
         for(let c = 0 ; c < this.n_canais ; c++){
-            const canal = new Audio();
+            const canal = {
+                audio: new Audio(),
+                fim: new Date(),
+            }
             this.canais[c] = canal;
         }
     }
 
     playMixer(audio){
+        const agora = new Date().getTime()
         for(let c = 0 ; c < this.n_canais ; c++){
             const canal = this.canais[c];
-            canal.src = audio.src;
-            canal.play();       
+            if(canal.fim < agora){
+                canal.audio.src = audio.src;
+                canal.audio.play();
+                canal.fim = agora + audio.duration * 1000;
+                break;
+            }       
         }
     }
 }

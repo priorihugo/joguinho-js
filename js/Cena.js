@@ -39,7 +39,6 @@ export default class Cena {
     }
   }
   quadro(t) {
-    if (this.assets.acabou()) {
       this.t0 = this.t0 ?? t;
       this.dt = (t - this.t0) / 1000;
 
@@ -54,7 +53,6 @@ export default class Cena {
       this.aRemover = [];
 
       this.t0 = t;
-    }
   }
   iniciar() {
     this.idAnim = requestAnimationFrame((t) => {

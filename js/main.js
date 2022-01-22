@@ -12,16 +12,13 @@ const ctx = canvas.getContext("2d");
 canvas.width = 28*32;
 canvas.height = 20*32;
 
-const assets = new AssetManager();
 const mixer = new Mixer();
+const assets = new AssetManager(mixer);
 const cenario01 = new Mapa();
 
 assets.carregaAudio("boom" , "assets/sound.wav");
 
-const testAudio = new Audio();
-testAudio.src = "assets/sound.wav";
-
-const c1 = new Cena(canvas , assets , mixer);
+const c1 = new Cena(canvas , assets);
 c1.configuraMapa(cenario01);
 cenario01.carregaMapa(mapa2);
 
@@ -44,6 +41,6 @@ document.addEventListener("keydown" , (e)=>{
    switch(e.key){
 
       case "q":
-        mixer.playMixer(assets.getAudio("boom"));
+        assets.play("boom");
    }
 })

@@ -1,10 +1,11 @@
 export default class AssetManager{
 
-    constructor(){
+    constructor(mixer = null){
         this.carregadas = 0;
         this.aCarregar = 0;
         this.imagens = new Map();
         this.audios = new Map();
+        this.mixer = mixer;
     }
     progresso(){
         if(this.aCarregar>0){
@@ -13,7 +14,6 @@ export default class AssetManager{
             return "[Nada a carregar]";
         }
     }
-
     carregaImagem(chave , src){
         const img = new Image();
         img.src = src;
@@ -43,5 +43,8 @@ export default class AssetManager{
     }
     acabou(){
         return this.carregadas === this.aCarregar;
+    }
+    play(chave){
+        this.mixer?.playMixer(this.getAudio(chave));
     }
 }

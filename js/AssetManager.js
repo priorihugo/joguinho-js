@@ -8,7 +8,7 @@ export default class AssetManager{
     }
     progresso(){
         if(this.aCarregar>0){
-            return `${((this.carregadas/this.aCarregar)*100).toFixed(2)}`;
+            return `${((this.carregadas/this.aCarregar)*100).toFixed(2)}%`;
         }else{
             return "[Nada a carregar]";
         }
@@ -31,9 +31,9 @@ export default class AssetManager{
     carregaAudio(chave , src){
         const audio = new Audio();
         audio.src = src;
-        audio.addEventListener("load" , ()=>{
-            console.log(`${this.carregadas}/${this.aCarregar} Audios carregadas`);
+        audio.addEventListener("loadeddata" , ()=>{
             this.carregadas++;
+            console.log(`${this.carregadas}/${this.aCarregar} Audios carregados`);  
         })
         this.audios.set(chave, audio);
         this.aCarregar++;
@@ -41,9 +41,7 @@ export default class AssetManager{
     getAudio(chave){
         return this.audios.get(chave);
     }
-    
     acabou(){
         return this.carregadas === this.aCarregar;
     }
-
 }

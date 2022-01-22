@@ -56,7 +56,7 @@ export default class Sprite {
         const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
         if (this.colisaoCom(fantasma)) {
           this.vx *= -1;
-          this.x = fantasma.x - fantasma.w/2 - this.w/2 - 20;
+          this.x = fantasma.x - fantasma.w/2 - this.w/2 - 1;
         }
         this.cena.ctx.strokeStyle = "red";
         this.cena.ctx.strokeRect(fantasma.x - t/2, fantasma.y - t/2, t, t);
@@ -70,7 +70,7 @@ export default class Sprite {
         const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
         if (this.colisaoCom(fantasma)) {
           this.vx *= -1;
-          this.x = fantasma.x + fantasma.w/2 + this.w/2 + 20;
+          this.x = fantasma.x + fantasma.w/2 + this.w/2 + 1;
         }
         this.cena.ctx.strokeStyle = "red";
         this.cena.ctx.strokeRect(fantasma.x - t / 2, fantasma.y - t / 2, t, t);
@@ -84,7 +84,7 @@ export default class Sprite {
         const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
         if (this.colisaoCom(fantasma)) {
           this.vy *= -1;
-          this.y = fantasma.y + fantasma.h/2 + this.h/2 + 20;
+          this.y = fantasma.y + fantasma.h/2 + this.h/2 + 1;
         }
         this.cena.ctx.strokeStyle = "red";
         this.cena.ctx.strokeRect(fantasma.x - t/2, fantasma.y - t / 2, t, t);
@@ -105,12 +105,19 @@ export default class Sprite {
       }
     }
   }
+  controlar(dt){
 
-  passo(dt) {
+  }
+  mover(dt){
     this.x = this.x + this.vx * dt;
     this.y = this.y + this.vy * dt;
     this.mx = Math.floor(this.x/this.cena.mapa.TAMANHO);
     this.my = Math.floor(this.y/this.cena.mapa.TAMANHO);
+  }
+
+  passo(dt) {
+    this.controlar(dt);
+    this.mover(dt);
   }
   colisaoCom(outro) {
     return !(

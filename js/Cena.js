@@ -23,8 +23,8 @@ export default class Cena {
     this.mapa.desenhar(this.ctx);
     for (let s = 0; s < this.sprites.length; s++) {
       let sprt = this.sprites[s];
-      sprt.desenhar(this.ctx);
       sprt.aplicaRestricoes();
+      sprt.desenhar(this.ctx);   
     }
     this.ctx.fillStyle = "yellow";
     this.ctx.fillText(this.assets.progresso(), 40, 40);
@@ -39,19 +39,18 @@ export default class Cena {
     }
   }
   quadro(t) {
-      this.t0 = this.t0 ?? t;
+      if(this.assets.acabou()){
+        this.t0 = this.t0 ?? t;
       this.dt = (t - this.t0) / 1000;
 
       this.passo(this.dt);
       this.desenhar();
       this.checarColisao();
-      //console.log(this.aRemover)
       this.removerSprites();
+      }
 
       this.iniciar();
-
       this.aRemover = [];
-
       this.t0 = t;
   }
   iniciar() {

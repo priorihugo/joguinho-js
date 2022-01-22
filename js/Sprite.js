@@ -97,7 +97,7 @@ export default class Sprite {
       if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
         const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
         if (this.colisaoCom(fantasma)) {
-          this.vy *= 0;
+          this.vy *= -1;
           this.y = fantasma.y - fantasma.h/2 - this.h/2 - 1;
         }
         this.cena.ctx.strokeStyle = "red";
@@ -109,8 +109,8 @@ export default class Sprite {
   passo(dt) {
     this.x = this.x + this.vx * dt;
     this.y = this.y + this.vy * dt;
-    this.mx = Math.floor(this.x / this.cena.mapa.TAMANHO);
-    this.my = Math.floor(this.y / this.cena.mapa.TAMANHO);
+    this.mx = Math.floor(this.x/this.cena.mapa.TAMANHO);
+    this.my = Math.floor(this.y/this.cena.mapa.TAMANHO);
   }
   colisaoCom(outro) {
     return !(

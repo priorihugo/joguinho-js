@@ -5,6 +5,7 @@ import Sprite from "./Sprite.js";
 import mapa1 from "../maps/mapa1.js";
 import mapa2 from "../maps/mapa2.js";
 import Mixer from "./Mixer.js";
+import InputManager from "./InputManager.js";
 
 ///canvas config
 const canvas = document.body.querySelector("canvas");
@@ -13,10 +14,15 @@ canvas.width = 28*32;
 canvas.height = 20*32;
 
 const mixer = new Mixer();
+const input = new InputManager();
 const assets = new AssetManager(mixer);
 const cenario01 = new Mapa();
 
 assets.carregaAudio("boom" , "assets/sound.wav");
+input.configurarTeclado({
+   "ArrowLeft" : "MOVE_ESQUERDA",
+   "ArrowRight": "MOVE_DIREITA"
+})
 
 const c1 = new Cena(canvas , assets);
 c1.configuraMapa(cenario01);
@@ -35,7 +41,7 @@ if(c1.assets.acabou()){
    c1.iniciar(); 
 }
 
-document.addEventListener("keydown" , (e)=>{
+/*document.addEventListener("keydown" , (e)=>{
 
    console.log(e.key);
    switch(e.key){
@@ -43,4 +49,4 @@ document.addEventListener("keydown" , (e)=>{
       case "q":
         assets.play("boom");
    }
-})
+})*/

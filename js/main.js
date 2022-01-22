@@ -17,7 +17,10 @@ const mixer = new Mixer();
 const input = new InputManager();
 const assets = new AssetManager(mixer);
 const cenario01 = new Mapa();
+const c1 = new Cena(canvas , assets);
 
+c1.configuraMapa(cenario01);
+cenario01.carregaMapa(mapa2);
 assets.carregaAudio("boom" , "assets/sound.wav");
 input.configurarTeclado({
    ArrowLeft : "MOVE_ESQUERDA",
@@ -27,13 +30,12 @@ input.configurarTeclado({
    
 })
 
-const c1 = new Cena(canvas , assets);
-c1.configuraMapa(cenario01);
-cenario01.carregaMapa(mapa2);
-
 const pc = new Sprite({x: 64 , y:64  , h : 32, w : 32});
 const en = new Sprite({x: 26*32 , y:64 , color: "red" , h: 32 , w : 32})
-const en2 = new Sprite({x: 300 , y:50 , color: "orange" ,vy: +50})
+const en2 = new Sprite({x: 300 , y:50 , color: "orange"})
+
+en.controlar = persegue;
+en2.controlar = persegue;
 
 pc.controlar = function(dt){
    if(input.comandos.get("MOVE_ESQUERDA")){
@@ -52,24 +54,48 @@ pc.controlar = function(dt){
    }
 }
 
-function persegue(dt){
-   this.vx = 50*Math.sign(pc.x - this.x);
-   this.vy = 50*Math.sign(pc.y - this.y);
-}
-en.controlar = persegue;
-
 c1.adicionar(pc);
 c1.adicionar(en);
 c1.adicionar(en2);
 
 c1.iniciar(); 
 
-/*document.addEventListener("keydown" , (e)=>{
+function persegue(dt){
+   this.vx = 50*Math.sign(pc.x - this.x);
+   this.vy = 50*Math.sign(pc.y - this.y);
+}
+
+function novoInimigoAleatorio(){
+   let nX;
+   let nY;
+   do{
+      nX = Math.floor(Math.random() * cenario01.COLUNAS)
+      nY = Math.floor(Math.random() * cenario01.LINHAS)
+      console.log(nY , nX);
+      console.log(mapa2[nY][nX]);
+   }while(mapa2[nY][nX] !== 0);
+
+   nY = nY*32;
+   nX = nX*32;
+
+   const novoSprite = new Sprite({
+      x: nX,
+      y: nY,
+      color: "red",
+   });
+
+   novoSprite.controlar = persegue;
+
+   c1.adicionar(novoSprite);
+
+}
+
+document.addEventListener("keydown" , (e)=>{
 
    console.log(e.key);
    switch(e.key){
 
       case "q":
-        assets.play("boom");
+        novoInimigoAleatorio();
    }
-})*/
+})

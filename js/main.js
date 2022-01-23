@@ -13,7 +13,7 @@ const ctx = canvas.getContext("2d");
 canvas.width = 28*32;
 canvas.height = 20*32;
 
-const mixer = new Mixer();
+const mixer = new Mixer(300);
 const input = new InputManager();
 const assets = new AssetManager(mixer);
 const cenario01 = new Mapa();
@@ -55,8 +55,8 @@ pc.controlar = function(dt){
 }
 
 c1.adicionar(pc);
-c1.adicionar(en);
-c1.adicionar(en2);
+//c1.adicionar(en);
+//c1.adicionar(en2);
 
 c1.iniciar(); 
 
@@ -68,6 +68,28 @@ function persegue(dt){
 function novoInimigoAleatorio(){
    let nX;
    let nY;
+
+   let ncor = Math.round(Math.random()*4);
+   let cor;
+
+   switch(ncor){
+      case 0:
+         cor = "yellow"
+         break;
+      case 1: 
+         cor = "red"
+         break;
+      case 2:
+         cor = "blue"
+         break;
+      case 3:
+         cor = "green"
+         break;
+      case 4:
+         cor = "orange"
+         break;
+   }
+
    do{
       nX = Math.floor(Math.random() * cenario01.COLUNAS)
       nY = Math.floor(Math.random() * cenario01.LINHAS)
@@ -75,15 +97,14 @@ function novoInimigoAleatorio(){
       console.log(mapa2[nY][nX]);
    }while(mapa2[nY][nX] !== 0);
 
-   nY = nY*32;
-   nX = nX*32;
+   nY = nY*32 + 32/2;
+   nX = nX*32 + 32/2;
 
    const novoSprite = new Sprite({
       x: nX,
       y: nY,
-      color: "red",
+      color: cor,
    });
-
    novoSprite.controlar = persegue;
 
    c1.adicionar(novoSprite);

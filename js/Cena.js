@@ -83,14 +83,14 @@ export default class Cena {
       for (let b = a + 1; b < this.sprites.length; b++) {
         const sB = this.sprites[b];
         if (sA.colisaoCom(sB)) {
-          console.log("colisão");
+          //console.log("colisão");
           this.quandoColide(sA, sB);
         }
       }
     }
   }
   quandoColide(a, b) {
-    this.assets.play("boom");
+    this.assets.play("hurt");
     if (!this.aRemover.includes(a)) {
       this.aRemover.push(a);
     }

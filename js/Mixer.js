@@ -17,7 +17,6 @@ export default class Mixer{
             this.canais[c] = canal;
         }
     }
-
     playMixer(audio){
         const agora = new Date().getTime()
         for(let c = 0 ; c < this.n_canais ; c++){

@@ -77,6 +77,7 @@ export default class Cena {
   }
   quandoColide(a, b) {
 
+    this.assets.play("boom");
     if (!this.aRemover.includes(a)) {
       this.aRemover.push(a);
     }

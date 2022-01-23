@@ -25,96 +25,13 @@ export default class Mapa {
     }
   }
   desenhar(ctx) {
-    let img = this.cena.assets.getImg("piso");
+   
     for (let l = 0; l < this.LINHAS; l++) {
       for (let c = 0; c < this.COLUNAS; c++) {
-        switch (this.quadrados[l][c]) {
-          case 1:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("paredeL1");
-            break;
 
-          case 2:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("paredeL2");
-            break;
 
-          case 3:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("paredeL3");
-            break;
-
-          case 4:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("paredeF1");
-            break;
-
-          case 5:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("paredeF2");
-            break;
-
-          case 6:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("paredeF3");
-            break;
-
-          case 7:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("canto1");
-            break;
-          case 8:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("canto2");
-            break;
-          case 9:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("canto3");
-            break;
-          case 10:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("canto4");
-            break;
-          case 11:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("canto5");
-            break;
-          case 12:
-            ctx.fillStyle = "grey";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "black";
-            img = this.cena.assets.getImg("canto6");
-            break;
-
-          default:
-            ctx.fillStyle = "black";
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "grey";
-            img = this.cena.assets.getImg("piso");
-            break;
-        }
+        let img = this.cena.assets.getImg("piso2");
+        ctx.fillStyle = "grey";
 
         ctx.fillRect(
           c * this.TAMANHO,
@@ -122,12 +39,52 @@ export default class Mapa {
           this.TAMANHO,
           this.TAMANHO
         );
-        /*ctx.strokeRect(
+        ctx.drawImage(
+          img,
           c * this.TAMANHO,
           l * this.TAMANHO,
           this.TAMANHO,
           this.TAMANHO
-        );*/
+        );
+        
+        switch (this.quadrados[l][c]) {
+          case 1:
+            img = this.cena.assets.getImg("paredeL1");
+            break;
+          case 2:
+            img = this.cena.assets.getImg("paredeL2");
+            break;
+          case 3:
+            img = this.cena.assets.getImg("paredeL3");
+            break;
+          case 4:
+            img = this.cena.assets.getImg("paredeF1");
+            break;
+          case 5:
+            img = this.cena.assets.getImg("paredeF2");
+            break;
+          case 6:
+            img = this.cena.assets.getImg("paredeF3");
+            break;
+          case 7:
+            img = this.cena.assets.getImg("canto1");
+            break;
+          case 8:
+            img = this.cena.assets.getImg("canto2");
+            break;
+          case 9:
+            img = this.cena.assets.getImg("canto3");
+            break;
+          case 10:
+            img = this.cena.assets.getImg("canto4");
+            break;
+          case 11:
+            img = this.cena.assets.getImg("canto5");
+            break;
+          case 12:
+            img = this.cena.assets.getImg("canto6");
+            break;
+        }
         ctx.drawImage(
           img,
           c * this.TAMANHO,

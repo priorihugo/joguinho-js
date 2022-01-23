@@ -38,6 +38,7 @@ assets.carregaImagem("canto5" , "assets/terreno/canto5.png")
 assets.carregaImagem("canto6" , "assets/terreno/canto6.png")
 
 assets.carregaImagem("piso" , "assets/terreno/piso.png")
+assets.carregaImagem("piso2" , "assets/terreno/piso2.png")
 
 input.configurarTeclado({
    ArrowLeft : "MOVE_ESQUERDA",
@@ -72,6 +73,7 @@ pc.controlar = function(dt){
 }
 
 c1.adicionar(pc);
+c1.event = novoInimigoAleatorio;
 //c1.adicionar(en);
 //c1.adicionar(en2);
 

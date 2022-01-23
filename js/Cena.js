@@ -14,6 +14,8 @@ export default class Cena {
     this.idAnim = null;
     this.assets = assets;
     this.mapa = null;
+    this.contagem = 0;
+    this.event = () => {};
   }
   desenhar() {
     //console.log("Desenhando cena...")
@@ -24,10 +26,10 @@ export default class Cena {
     for (let s = 0; s < this.sprites.length; s++) {
       let sprt = this.sprites[s];
       sprt.aplicaRestricoes();
-      sprt.desenhar(this.ctx);   
+      sprt.desenhar(this.ctx);
     }
     this.ctx.fillStyle = "yellow";
-    this.ctx.fillText(this.assets.progresso(), 40, 40);
+    this.ctx.fillText(this.assets.progresso(), 10, 20);
   }
   adicionar(sprite) {
     sprite.cena = this;
@@ -39,19 +41,31 @@ export default class Cena {
     }
   }
   quadro(t) {
-      if(this.assets.acabou()){
-        this.t0 = this.t0 ?? t;
+    if (this.assets.acabou()) {
+      this.t0 = this.t0 ?? t;
       this.dt = (t - this.t0) / 1000;
 
       this.passo(this.dt);
       this.desenhar();
       this.checarColisao();
       this.removerSprites();
-      }
 
-      this.iniciar();
-      this.aRemover = [];
-      this.t0 = t;
+      ///eu vi que existe um metodo que usa um new Date(), mas não sei qual melhor
+      this.contagem += this.dt;
+      //console.log(this.contagem)
+
+      if(this.contagem > 10){
+        this.event();
+        this.contagem = 0;
+
+      }
+    }
+    
+
+
+    this.iniciar();
+    this.aRemover = [];
+    this.t0 = t;
   }
   iniciar() {
     this.idAnim = requestAnimationFrame((t) => {
@@ -76,7 +90,6 @@ export default class Cena {
     }
   }
   quandoColide(a, b) {
-
     this.assets.play("boom");
     if (!this.aRemover.includes(a)) {
       this.aRemover.push(a);
@@ -85,12 +98,12 @@ export default class Cena {
       this.aRemover.push(b);
     }
   }
-  removerSprites(){
+  removerSprites() {
     for (const alvo of this.aRemover) {
       const idx = this.sprites.indexOf(alvo);
-        if(idx >= 0 ){
-            this.sprites.splice(idx, 1)
-        }
+      if (idx >= 0) {
+        this.sprites.splice(idx, 1);
+      }
     }
   }
 

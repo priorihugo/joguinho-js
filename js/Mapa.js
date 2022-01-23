@@ -25,7 +25,7 @@ export default class Mapa {
     }
   }
   desenhar(ctx) {
-    const a = this.cena.assets;
+    let img = this.cena.assets.getImg("piso");
     for (let l = 0; l < this.LINHAS; l++) {
       for (let c = 0; c < this.COLUNAS; c++) {
         switch (this.quadrados[l][c]) {
@@ -33,46 +33,108 @@ export default class Mapa {
             ctx.fillStyle = "grey";
             ctx.lineWidth = 1;
             ctx.strokeStyle = "black";
-            //console.log(this.cena.assets.imagens)
-            ctx.fillRect(
-              c * this.TAMANHO,
-              l * this.TAMANHO,
-              this.TAMANHO,
-              this.TAMANHO
-            );
-            ctx.strokeRect(
-              c * this.TAMANHO,
-              l * this.TAMANHO,
-              this.TAMANHO,
-              this.TAMANHO
-            );
-            ctx.drawImage(
-              this.cena.assets.getImg("paredeL1"),
-              c * this.TAMANHO,
-              l * this.TAMANHO,
-              this.TAMANHO,
-              this.TAMANHO
-            );
+            img = this.cena.assets.getImg("paredeL1");
+            break;
+
+          case 2:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("paredeL2");
+            break;
+
+          case 3:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("paredeL3");
+            break;
+
+          case 4:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("paredeF1");
+            break;
+
+          case 5:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("paredeF2");
+            break;
+
+          case 6:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("paredeF3");
+            break;
+
+          case 7:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("canto1");
+            break;
+          case 8:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("canto2");
+            break;
+          case 9:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("canto3");
+            break;
+          case 10:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("canto4");
+            break;
+          case 11:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("canto5");
+            break;
+          case 12:
+            ctx.fillStyle = "grey";
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            img = this.cena.assets.getImg("canto6");
             break;
 
           default:
             ctx.fillStyle = "black";
             ctx.lineWidth = 1;
             ctx.strokeStyle = "grey";
-            ctx.fillRect(
-              c * this.TAMANHO,
-              l * this.TAMANHO,
-              this.TAMANHO,
-              this.TAMANHO
-            );
-            ctx.strokeRect(
-              c * this.TAMANHO,
-              l * this.TAMANHO,
-              this.TAMANHO,
-              this.TAMANHO
-            );
+            img = this.cena.assets.getImg("piso");
             break;
         }
+
+        ctx.fillRect(
+          c * this.TAMANHO,
+          l * this.TAMANHO,
+          this.TAMANHO,
+          this.TAMANHO
+        );
+        /*ctx.strokeRect(
+          c * this.TAMANHO,
+          l * this.TAMANHO,
+          this.TAMANHO,
+          this.TAMANHO
+        );*/
+        ctx.drawImage(
+          img,
+          c * this.TAMANHO,
+          l * this.TAMANHO,
+          this.TAMANHO,
+          this.TAMANHO
+        );
       }
     }
   }

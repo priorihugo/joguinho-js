@@ -22,6 +22,17 @@ const c1 = new Cena(canvas , assets);
 c1.configuraMapa(cenario01);
 cenario01.carregaMapa(mapa2);
 assets.carregaAudio("boom" , "assets/sound.wav");
+assets.carregaImagem("paredeL1" , "assets/terreno/paredeLateral1.png")
+assets.carregaImagem("paredeL2" , "assets/terreno/paredeLateral2.png")
+assets.carregaImagem("paredeL3" , "assets/terreno/paredeLateral3.png")
+
+assets.carregaImagem("paredeT1" , "assets/terreno/paredeTopo1.png")
+assets.carregaImagem("paredeT2" , "assets/terreno/paredeTopo2.png")
+assets.carregaImagem("paredeT3" , "assets/terreno/paredeTopo3.png")
+
+assets.carregaImagem("piso" , "assets/terreno/piso.png")
+assets.carregaImagem("topo" , "assets/terreno/topo.png")
+
 input.configurarTeclado({
    ArrowLeft : "MOVE_ESQUERDA",
    ArrowRight: "MOVE_DIREITA",

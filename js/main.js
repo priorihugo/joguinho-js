@@ -6,6 +6,7 @@ import mapa1 from "../maps/mapa1.js";
 import mapa2 from "../maps/mapa2.js";
 import Mixer from "./Mixer.js";
 import InputManager from "./InputManager.js";
+import Game from "./Game.js";
 
 ///canvas config
 const canvas = document.body.querySelector("canvas");
@@ -13,12 +14,14 @@ const ctx = canvas.getContext("2d");
 canvas.width = 28*32;
 canvas.height = 20*32;
 
-const mixer = new Mixer(300);
+const mixer = new Mixer(10);
 const input = new InputManager();
 const assets = new AssetManager(mixer);
-const cenario01 = new Mapa();
 const c1 = new Cena(canvas , assets);
+const cenario01 = new Mapa();
+const game = new Game(canvas, assets, input);
 
+game.adicionarCena("jogo" , c1);
 c1.configuraMapa(cenario01);
 cenario01.carregaMapa(mapa2);
 assets.carregaAudio("boom" , "assets/sons/boom.wav");
@@ -27,18 +30,15 @@ assets.carregaAudio("hurt" , "assets/sons/hurt.wav");
 assets.carregaImagem("paredeL1" , "assets/terreno/paredeL1.png");
 assets.carregaImagem("paredeL2" , "assets/terreno/paredeL2.png");
 assets.carregaImagem("paredeL3" , "assets/terreno/paredeL3.png");
-
 assets.carregaImagem("paredeF1" , "assets/terreno/paredeF1.png");
 assets.carregaImagem("paredeF2" , "assets/terreno/paredeF2.png");
 assets.carregaImagem("paredeF3" , "assets/terreno/paredeF3.png");
-
 assets.carregaImagem("canto1" , "assets/terreno/canto1.png");
 assets.carregaImagem("canto2" , "assets/terreno/canto2.png");
 assets.carregaImagem("canto3" , "assets/terreno/canto3.png");
 assets.carregaImagem("canto4" , "assets/terreno/canto4.png");
 assets.carregaImagem("canto5" , "assets/terreno/canto5.png");
 assets.carregaImagem("canto6" , "assets/terreno/canto6.png");
-
 assets.carregaImagem("piso" , "assets/terreno/piso.png");
 assets.carregaImagem("piso2" , "assets/terreno/piso2.png");
 
@@ -49,6 +49,7 @@ input.configurarTeclado({
    ArrowUp: "MOVE_CIMA"
    
 });
+
 
 const pc = new Sprite({x: 64 , y:64  , h : 32, w : 32});
 const en = new Sprite({x: 26*32 , y:64 , color: "red" , h: 32 , w : 32});

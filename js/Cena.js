@@ -1,8 +1,6 @@
 export default class Cena {
   ///responsavel por desenhar elementos em tela
   constructor(canvas, assets = null) {
-    //console.log("Criando cena...");
-    //console.log(canvas);
     this.canvas = canvas;
     this.cw = canvas.width;
     this.ch = canvas.heigh;
@@ -15,6 +13,7 @@ export default class Cena {
     this.assets = assets;
     this.mapa = null;
     this.contagem = 0;
+    this.game = null;
     this.event = () => {};
   }
   desenhar() {

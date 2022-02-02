@@ -1,10 +1,8 @@
 export default class Cena {
   ///responsavel por desenhar elementos em tela
-  constructor(canvas, assets = null) {
+  constructor(canvas = null, assets = null) {
     this.canvas = canvas;
-    this.cw = canvas.width;
-    this.ch = canvas.heigh;
-    this.ctx = canvas.getContext("2d");
+    this.ctx = canvas?.getContext("2d");
     this.sprites = [];
     this.aRemover = [];
     this.t0 = null;
@@ -19,15 +17,13 @@ export default class Cena {
   }
   desenhar() {
     this.ctx.fillStyle = "white";
-    this.ctx.fillRect(0, 0, this.cw, this.cw);
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.heigh);
     this.mapa.desenhar(this.ctx);
     for (let s = 0; s < this.sprites.length; s++) {
       let sprt = this.sprites[s];
       sprt.aplicaRestricoes();
       sprt.desenhar(this.ctx);
     }
-    this.ctx.fillStyle = "yellow";
-    this.ctx.fillText(this.assets.progresso(), 10, 20);
   }
   adicionar(sprite) {
     sprite.cena = this;

@@ -7,8 +7,11 @@ export default class Sprite {
     color = "white",
     vx = 0,
     vy = 0,
-    img = null
-  } = {}) {
+    img = null,
+    tags = []
+  } = {}) 
+  
+  {
     this.x = x;
     this.y = y;
     this.h = h;
@@ -20,6 +23,10 @@ export default class Sprite {
     this.mx = 0;
     this.my = 0;
     this.img = img
+    this.tags = new Set();
+    tags.forEach((tag)=>{
+      this.tags.add(tag);
+    });
   }
   desenhar(ctx) {
     ctx.fillStyle = this.color;

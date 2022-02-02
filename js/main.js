@@ -56,7 +56,7 @@ input.configurarTeclado({
   " ": "PROXIMA_CENA",
 });
 
-const pc = new Sprite({ x: 64, y: 64, h: 32, w: 32 });
+const pc = new Sprite({ x: 64, y: 64, h: 32, w: 32, tags: ["pc"] });
 const en = new Sprite({ x: 26 * 32, y: 64, color: "red", h: 32, w: 32 });
 const en2 = new Sprite({ x: 300, y: 50, color: "orange" });
 
@@ -128,6 +128,7 @@ function novoInimigoAleatorio() {
     x: nX,
     y: nY,
     color: cor,
+    tags: ["enemy"]
   });
   novoSprite.controlar = persegue;
 

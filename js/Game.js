@@ -12,8 +12,21 @@ export default class Game{
         cena.game = this;
         cena.canvas = this.canvas;
         cena.assets = this.assets;
-        cena.input = this.input
+        cena.input = this.input;
+        if(this.cena === null){
+            this.cena = cena;
+        }
     }
-    
+    selecionaCena(chave){
+        if(this.cenas.has(chave)){
+            this.cena = this.cenas.get(chave);
+        }
+    }
+    iniciar(){
+        this.cena?.iniciar();
+    }
+    parar(){
+        this.cena?.parar();
+    }
 
 }

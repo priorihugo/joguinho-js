@@ -60,16 +60,16 @@ en2.controlar = persegue;
 
 pc.controlar = function(dt){
    if(input.comandos.get("MOVE_ESQUERDA")){
-      pc.vx = - 100;
+      pc.vx = - 200;
    }else if(input.comandos.get("MOVE_DIREITA")){
-      pc.vx = + 100;
+      pc.vx = + 200;
    }else{
       pc.vx = 0;
    }
    if(input.comandos.get("MOVE_CIMA")){
-      pc.vy = - 100;
+      pc.vy = - 200;
    }else if(input.comandos.get("MOVE_BAIXO")){
-      pc.vy = + 100;
+      pc.vy = + 200;
    }else{
       pc.vy = 0;
    }
@@ -84,7 +84,8 @@ c1.event = novoInimigoAleatorio;
 for(let i = 0 ; i < 3 ; i++){
    novoInimigoAleatorio();
 }
-c1.iniciar(); 
+
+game.iniciar(); 
 
 function persegue(dt){
    this.vx = 50*Math.sign(pc.x - this.x);

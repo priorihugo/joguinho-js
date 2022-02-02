@@ -1,5 +1,4 @@
 export default class Game{
-
     constructor(canvas, assets, input){
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");

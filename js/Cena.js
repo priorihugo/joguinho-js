@@ -1,19 +1,11 @@
 export default class Cena {
   ///responsavel por desenhar elementos em tela
-  constructor(canvas = null, assets = null) {
+  constructor(canvas = null, assets = null , input = null) {
     this.canvas = canvas;
     this.ctx = canvas?.getContext("2d");
-    this.sprites = [];
-    this.aRemover = [];
-    this.t0 = null;
-    this.dt = null;
-    this.idAnim = null;
     this.assets = assets;
-    this.mapa = null;
-    this.contagem = 0;
-    this.game = null;
-    this.event = () => {};
-    this.parado = true;
+    this.input = input;
+    this.preparar();
   }
   desenhar() {
     this.ctx.fillStyle = "white";
@@ -49,20 +41,22 @@ export default class Cena {
         this.contagem = 0;
       }
     }
-    this.iniciar();
+    if(this.rodando) this.iniciar();
+
     this.aRemover = [];
     this.t0 = t;
   }
   iniciar() {
+    this.rodando = true;
     this.idAnim = requestAnimationFrame((t) => {
       this.quadro(t);
     });
   }
   parar() {
+    this.rodando = false;
     cancelAnimationFrame(this.idAnim);
     this.t0 = null;
     this.dt = null;
-    this.parado = true;
   }
   checarColisao() {
     for (let a = 0; a < this.sprites.length - 1; a++) {
@@ -93,9 +87,22 @@ export default class Cena {
       }
     }
   }
-
   configuraMapa(mapa) {
     this.mapa = mapa;
     this.mapa.cena = this;
+  }
+  preparar(){
+    this.sprites = [];
+    this.aRemover = [];
+    this.t0 = null;
+    this.dt = null;
+    this.idAnim = null;
+    
+    this.mapa = null;
+    this.contagem = 0;
+    this.game = null;
+    this.event = () => {};
+    this.rodando = true;
+    
   }
 }

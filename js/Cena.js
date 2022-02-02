@@ -15,10 +15,9 @@ export default class Cena {
     this.contagem = 0;
     this.game = null;
     this.event = () => {};
+    this.parado = true;
   }
   desenhar() {
-    //console.log("Desenhando cena...")
-    //console.log(this.canvas)
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, 0, this.cw, this.cw);
     this.mapa.desenhar(this.ctx);
@@ -40,28 +39,20 @@ export default class Cena {
     }
   }
   quadro(t) {
+    this.desenhar();
+    this.t0 = this.t0 ?? t;
+    this.dt = (t - this.t0) / 1000;
     if (this.assets.acabou()) {
-      this.t0 = this.t0 ?? t;
-      this.dt = (t - this.t0) / 1000;
-
       this.passo(this.dt);
-      this.desenhar();
       this.checarColisao();
       this.removerSprites();
-
       ///eu vi que existe um metodo que usa um new Date(), mas não sei qual melhor
       this.contagem += this.dt;
-      //console.log(this.contagem)
-
-      if(this.contagem > 10){
+      if (this.contagem > 10) {
         this.event();
         this.contagem = 0;
-
       }
     }
-    
-
-
     this.iniciar();
     this.aRemover = [];
     this.t0 = t;
@@ -75,6 +66,7 @@ export default class Cena {
     cancelAnimationFrame(this.idAnim);
     this.t0 = null;
     this.dt = null;
+    this.parado = true;
   }
   checarColisao() {
     for (let a = 0; a < this.sprites.length - 1; a++) {

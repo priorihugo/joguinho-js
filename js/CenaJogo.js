@@ -3,6 +3,7 @@ import Mapa from "./Mapa.js";
 import Sprite from "./Sprite.js";
 import mapa1 from "../maps/mapa1.js";
 import mapa2 from "../maps/mapa2.js";
+import SpritePersonagem from "./SpritePersonagem.js";
 
 export default class CenaJogo extends Cena {
   quandoColide(a, b) {
@@ -13,18 +14,18 @@ export default class CenaJogo extends Cena {
     if (!this.aRemover.includes(b)) {
       this.aRemover.push(b);
     }
-    console.log("fim");
-    this.game.selecionaCena("fim");
+    if(a.tags.has("pc")){
+      this.game.selecionaCena("fim");
+    }
   }
 
   preparar() {
-
     super.preparar();
 
     const cenario01 = new Mapa();
     this.configuraMapa(cenario01);
     cenario01.carregaMapa(mapa2);
-    const pc = new Sprite({ x: 64, y: 64, h: 32, w: 32, tags: ["pc"] });
+    const pc = new SpritePersonagem({ x: 64, y: 64, h: 32, w: 32, tags: ["pc"] });
     const en = new Sprite({ x: 26 * 32, y: 64, color: "red", h: 32, w: 32 });
     const en2 = new Sprite({ x: 300, y: 50, color: "orange" });
 
@@ -56,7 +57,6 @@ export default class CenaJogo extends Cena {
     function novoInimigoAleatorio() {
       let nX;
       let nY;
-
       let ncor = Math.round(Math.random() * 4);
       let cor;
 

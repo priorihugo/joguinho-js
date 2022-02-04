@@ -15,7 +15,6 @@ canvas.height = 20 * 32;
 const mixer = new Mixer(10);
 const input = new InputManager();
 const assets = new AssetManager(mixer);
-
 const c0 = new CenaCarregando();
 const c1 = new CenaJogo();
 const c2 = new CenaFim();
@@ -49,6 +48,7 @@ input.configurarTeclado({
   ArrowDown: "MOVE_BAIXO",
   ArrowUp: "MOVE_CIMA",
   " ": "PROXIMA_CENA",
+  e: "ATACAR"
 });
 game.iniciar();
 

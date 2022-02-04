@@ -1,10 +1,11 @@
 export default class Cena {
   ///responsavel por desenhar elementos em tela
-  constructor(canvas = null, assets = null , input = null) {
+  constructor(canvas = null, assets = null, input = null) {
     this.canvas = canvas;
     this.ctx = canvas?.getContext("2d");
     this.assets = assets;
     this.input = input;
+    this.game = null;
     this.preparar();
   }
   desenhar() {
@@ -13,7 +14,9 @@ export default class Cena {
     this.mapa.desenhar(this.ctx);
     for (let s = 0; s < this.sprites.length; s++) {
       let sprt = this.sprites[s];
+      sprt.calculaPosicao();
       sprt.aplicaRestricoes();
+      sprt?.acao();
       sprt.desenhar(this.ctx);
     }
   }
@@ -41,7 +44,7 @@ export default class Cena {
         this.contagem = 0;
       }
     }
-    if(this.rodando) this.iniciar();
+    if (this.rodando) this.iniciar();
 
     this.aRemover = [];
     this.t0 = t;
@@ -91,18 +94,15 @@ export default class Cena {
     this.mapa = mapa;
     this.mapa.cena = this;
   }
-  preparar(){
+  preparar() {
     this.sprites = [];
     this.aRemover = [];
     this.t0 = null;
     this.dt = null;
     this.idAnim = null;
-    
     this.mapa = null;
     this.contagem = 0;
-    this.game = null;
     this.event = () => {};
     this.rodando = true;
-    
   }
 }

@@ -8,15 +8,15 @@ export default class Cena {
     this.game = null;
     this.preparar();
   }
-  desenhar() {
+  desenhar(dt) {
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.heigh);
     this.mapa.desenhar(this.ctx);
     for (let s = 0; s < this.sprites.length; s++) {
       let sprt = this.sprites[s];
       sprt.calculaPosicao();
+      sprt?.acao(dt);
       sprt.aplicaRestricoes();
-      sprt?.acao();
       sprt.desenhar(this.ctx);
     }
   }
@@ -30,22 +30,22 @@ export default class Cena {
     }
   }
   quadro(t) {
-    this.desenhar();
     this.t0 = this.t0 ?? t;
     this.dt = (t - this.t0) / 1000;
+    this.desenhar(this.dt);
     if (this.assets.acabou()) {
       this.passo(this.dt);
       this.checarColisao();
-      this.removerSprites();
-      ///eu vi que existe um metodo que usa um new Date(), mas não sei qual melhor
+      
       this.contagem += this.dt;
       if (this.contagem > 10) {
         this.event();
         this.contagem = 0;
       }
     }
-    if (this.rodando) this.iniciar();
+    this.removerSprites();
 
+    if (this.rodando) this.iniciar();
     this.aRemover = [];
     this.t0 = t;
   }
@@ -67,19 +67,22 @@ export default class Cena {
       for (let b = a + 1; b < this.sprites.length; b++) {
         const sB = this.sprites[b];
         if (sA.colisaoCom(sB)) {
-          //console.log("colisão");
           this.quandoColide(sA, sB);
         }
       }
     }
   }
   quandoColide(a, b) {
-    this.assets.play("hurt");
-    if (!this.aRemover.includes(a)) {
-      this.aRemover.push(a);
+    if(a.tags.has("pc")&& b.tagas.has("enemy")){
+      console.log(a.tags[0] , b.tags[0]);
+      this.assets.play("hurt");
+      this.marcaRemocao(a);
+      this.marcaRemocao(b);
     }
-    if (!this.aRemover.includes(b)) {
-      this.aRemover.push(b);
+  }
+  marcaRemocao(sprite){
+    if(this.aRemover.contains(sprite)){
+      this.aRemover.push(sprite);
     }
   }
   removerSprites() {

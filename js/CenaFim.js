@@ -2,7 +2,6 @@ import Cena from "./Cena.js";
 
 export default class CenaFim extends Cena {
   desenhar() {
-    console.log("cena fim");
     this.ctx.fillStyle = "black";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.font = "20px Impact";

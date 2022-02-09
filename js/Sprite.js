@@ -7,7 +7,6 @@ export default class Sprite {
     color = "white",
     vx = 0,
     vy = 0,
-    img = null,
     tags = [],
   } = {}) {
     this.x = x;
@@ -20,8 +19,10 @@ export default class Sprite {
     this.cena = null;
     this.mx = null;
     this.my = null;
-    //this.img = img
+    this.agindo = false;
     this.tags = new Set();
+    this.direcao = "esquerda";
+    this.sinalControle = true;
     tags.forEach((tag) => {
       this.tags.add(tag);
     });
@@ -117,7 +118,7 @@ export default class Sprite {
     }
   }
   controlar(dt) {}
-  acao() {}
+  acao(dt) {}
   mover(dt) {
     this.x = this.x + this.vx * dt;
     this.y = this.y + this.vy * dt;
@@ -133,6 +134,7 @@ export default class Sprite {
     this.mover(dt);
   }
   colisaoCom(outro) {
+    //console.log("colisao");
     return !(
       this.x - this.w / 2 > outro.x + outro.w / 2 ||
       this.x + this.w / 2 < outro.x - outro.w / 2 ||

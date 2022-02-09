@@ -7,52 +7,67 @@ import SpritePersonagem from "./SpritePersonagem.js";
 
 export default class CenaJogo extends Cena {
   quandoColide(a, b) {
-    this.assets.play("hurt");
-    if (!this.aRemover.includes(a)) {
-      this.aRemover.push(a);
+    if (b.tags.has("enemy")) {
+      this.assets.play("hurt");
+      if (!this.aRemover.includes(a)) {
+        this.aRemover.push(a);
+      }
+      if (!this.aRemover.includes(b)) {
+        this.aRemover.push(b);
+      }
+      if (a.tags.has("pc")) {
+        this.game.selecionaCena("fim");
+      }
     }
-    if (!this.aRemover.includes(b)) {
-      this.aRemover.push(b);
-    }
-    if(a.tags.has("pc")){
-      this.game.selecionaCena("fim");
+    if (a.tags.has("enemy")) {
+      if (!this.aRemover.includes(a)) {
+        this.aRemover.push(a);
+      }
     }
   }
-
   preparar() {
+    const cena = this;
     super.preparar();
-
     const cenario01 = new Mapa();
     this.configuraMapa(cenario01);
     cenario01.carregaMapa(mapa2);
-    const pc = new SpritePersonagem({ x: 64, y: 64, h: 32, w: 32, tags: ["pc"] });
-    const en = new Sprite({ x: 26 * 32, y: 64, color: "red", h: 32, w: 32 });
-    const en2 = new Sprite({ x: 300, y: 50, color: "orange" });
-
-    en.controlar = persegue;
-    en2.controlar = persegue;
-
-    const cena = this;
-
+    const pc = new SpritePersonagem({
+      x: 64,
+      y: 64,
+      h: 32,
+      w: 32,
+      tags: ["pc"],
+    });
+    pc.configuraAtaque();
     pc.controlar = function (dt) {
       if (cena.input.comandos.get("MOVE_ESQUERDA")) {
         pc.vx = -200;
+        pc.direcao = "esquerda";
       } else if (cena.input.comandos.get("MOVE_DIREITA")) {
         pc.vx = +200;
+        pc.direcao = "direita";
       } else {
         pc.vx = 0;
       }
       if (cena.input.comandos.get("MOVE_CIMA")) {
         pc.vy = -200;
+        pc.direcao = "cima";
       } else if (cena.input.comandos.get("MOVE_BAIXO")) {
         pc.vy = +200;
+        pc.direcao = "baixo";
       } else {
         pc.vy = 0;
       }
     };
+    this.adicionar(pc);
+
     function persegue(dt) {
-      this.vx = 50 * Math.sign(pc.x - this.x);
-      this.vy = 50 * Math.sign(pc.y - this.y);
+      this.vx = 600 * Math.sign(pc.x - this.x) * dt;
+      this.vy = 600 * Math.sign(pc.y - this.y) * dt;
+    }
+    function perseguePonto(dt, alvo) {
+      this.vx = 600 * Math.sign(alvo.x - this.x) * dt;
+      this.vy = 600 * Math.sign(alvo.y - this.y) * dt;
     }
     function novoInimigoAleatorio() {
       let nX;
@@ -80,8 +95,6 @@ export default class CenaJogo extends Cena {
       do {
         nX = Math.floor(Math.random() * cenario01.COLUNAS);
         nY = Math.floor(Math.random() * cenario01.LINHAS);
-        //console.log(nY , nX);
-        //console.log(mapa2[nY][nX]);
       } while (mapa2[nY][nX] !== 0);
 
       nY = nY * 32 + 32 / 2;
@@ -94,9 +107,11 @@ export default class CenaJogo extends Cena {
         tags: ["enemy"],
       });
       novoSprite.controlar = persegue;
-      this.adicionar(novoSprite);
+      cena.adicionar(novoSprite);
     }
-    this.adicionar(pc);
-    this.event = novoInimigoAleatorio;
+    novoInimigoAleatorio();
+    //novoInimigoAleatorio();
+    //novoInimigoAleatorio();
+    //this.event = novoInimigoAleatorio;
   }
 }

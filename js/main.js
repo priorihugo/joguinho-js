@@ -48,6 +48,8 @@ input.configurarTeclado({
   ArrowDown: "MOVE_BAIXO",
   ArrowUp: "MOVE_CIMA",
   " ": "PROXIMA_CENA",
+  a: "ATAQUE_HORARIO",
+  d: "ATAQUE_ANTIHORARIO",
   e: "ATACAR"
 });
 game.iniciar();

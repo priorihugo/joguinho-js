@@ -7,22 +7,12 @@ import SpritePersonagem from "./SpritePersonagem.js";
 
 export default class CenaJogo extends Cena {
   quandoColide(a, b) {
-    if (b.tags.has("enemy")) {
-      this.assets.play("hurt");
-      if (!this.aRemover.includes(a)) {
-        this.aRemover.push(a);
+    if(a.tags.has("ataquePc")){
+      if(b.tags.has("enemy")){
+        this.assets.play("hurt");
+          this.marcaRemocao(b);
       }
-      if (!this.aRemover.includes(b)) {
-        this.aRemover.push(b);
-      }
-      if (a.tags.has("pc")) {
-        this.game.selecionaCena("fim");
-      }
-    }
-    if (a.tags.has("enemy")) {
-      if (!this.aRemover.includes(a)) {
-        this.aRemover.push(a);
-      }
+
     }
   }
   preparar() {
@@ -38,6 +28,8 @@ export default class CenaJogo extends Cena {
       w: 32,
       tags: ["pc"],
     });
+    this.adicionar(pc);
+    pc.setaAtaque();
     pc.configuraAtaque();
     pc.controlar = function (dt) {
       if (cena.input.comandos.get("MOVE_ESQUERDA")) {
@@ -49,6 +41,7 @@ export default class CenaJogo extends Cena {
       } else {
         pc.vx = 0;
       }
+      //
       if (cena.input.comandos.get("MOVE_CIMA")) {
         pc.vy = -200;
         pc.direcao = "cima";
@@ -58,9 +51,17 @@ export default class CenaJogo extends Cena {
       } else {
         pc.vy = 0;
       }
-    };
-    this.adicionar(pc);
+      //
+      const va_max = 2;
+      if(cena.input.comandos.get("ATAQUE_ANTIHORARIO")){
+        pc.va = va_max;
+      }else if (cena.input.comandos.get("ATAQUE_HORARIO")){
+        pc.va = -va_max;
+      }else{
+        pc.va = 0;
+      }
 
+    };
     function persegue(dt) {
       this.vx = 600 * Math.sign(pc.x - this.x) * dt;
       this.vy = 600 * Math.sign(pc.y - this.y) * dt;
@@ -109,9 +110,10 @@ export default class CenaJogo extends Cena {
       novoSprite.controlar = persegue;
       cena.adicionar(novoSprite);
     }
+
+    this.event = novoInimigoAleatorio;
     novoInimigoAleatorio();
-    //novoInimigoAleatorio();
-    //novoInimigoAleatorio();
-    //this.event = novoInimigoAleatorio;
+    novoInimigoAleatorio();
+    novoInimigoAleatorio();
   }
 }

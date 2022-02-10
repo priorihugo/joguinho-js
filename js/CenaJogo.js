@@ -23,7 +23,7 @@ export default class CenaJogo extends Cena {
     const cena = this;
     super.preparar();
     const cenario01 = new Mapa();
-    this.configuraMapa(cenario01);
+    cena.configuraMapa(cenario01);
     cenario01.carregaMapa(mapa2);
     const pc = new SpritePersonagem({
       x: 64,
@@ -32,9 +32,9 @@ export default class CenaJogo extends Cena {
       w: 32,
       tags: ["pc"],
     });
-    this.adicionar(pc);
+    cena.adicionar(pc);
     pc.setaAtaque();
-    pc.configuraAtaque();
+    //pc.configuraAtaque();
     pc.controlar = function (dt) {
       if (cena.input.comandos.get("MOVE_ESQUERDA")) {
         pc.vx = -200;
@@ -56,6 +56,7 @@ export default class CenaJogo extends Cena {
         pc.vy = 0;
       }
       //
+      /*
       const va_max = 4;
       if (cena.input.comandos.get("ATAQUE_ANTIHORARIO")) {
         pc.va = va_max;
@@ -64,6 +65,7 @@ export default class CenaJogo extends Cena {
       } else {
         // pc.va = 0;
       }
+      */
     };
     function persegue(dt) {
       this.vx = 600 * Math.sign(pc.x - this.x) * dt;
@@ -73,6 +75,36 @@ export default class CenaJogo extends Cena {
       this.vx = 600 * Math.sign(alvo.x - this.x) * dt;
       this.vy = 600 * Math.sign(alvo.y - this.y) * dt;
     }
+    /*function atirar(dt){
+      this.cooldown += dt;
+      const v = 800;
+      if(this.cooldown >= 4){
+
+        const angulo = Math.atan2( pc.y - this.y, pc.x - this.x).toPrecision(2); 
+        const vx = Math.cos(angulo).toPrecision(2) * v;
+        const vy = Math.sin(angulo).toPrecision(2) * v;
+        let ww = 0 , hh = 0;
+        if(Math.abs(this.x - pc.x) > Math.abs(this.y - pc.y)){
+          ww = 40;
+          hh = 4;    
+        }else{
+          ww = 4;
+          hh = 40;  
+        }
+        const projetil = new Sprite({
+          color: "red",
+          x: this.x,
+          y: this.y,
+          w: ww,
+          h: hh,
+          vx: vx,
+          vy: vy,
+          tags: ["projetil"]
+        });
+        cena.adicionar(projetil);
+        this.cooldown = 0;
+      }
+    }*/
     function novoInimigoAleatorio() {
       let nX;
       let nY;
@@ -110,10 +142,11 @@ export default class CenaJogo extends Cena {
         color: cor,
         tags: ["enemy"],
       });
-      novoSprite.controlar = persegue;
+      //novoSprite.controlar = persegue;
+      //novoSprite.acao = atirar;
       cena.adicionar(novoSprite);
     }
-    //this.event = novoInimigoAleatorio;
+    this.event = novoInimigoAleatorio;
 
     this.ctx.canvas.addEventListener("mousemove", (e) => {
       const mouseX = e.clientX - cena.ctx.canvas.offsetLeft;

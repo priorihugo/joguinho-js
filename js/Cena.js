@@ -36,7 +36,7 @@ export default class Cena {
     if (this.assets.acabou()) {
       this.passo(this.dt);
       this.contagem += this.dt;
-      if (this.contagem >= 2) {
+      if (this.contagem >= 5) {
         this.event(this.dt);
         this.contagem = 0;
       }

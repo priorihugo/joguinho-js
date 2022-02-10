@@ -22,7 +22,7 @@ export default class Sprite {
     this.agindo = false;
     this.tags = new Set();
     this.direcao = "esquerda";
-    this.sinalControle = true;
+    this.cooldown = 0;
     tags.forEach((tag) => {
       this.tags.add(tag);
     });
@@ -59,61 +59,117 @@ export default class Sprite {
   }
   restricoesDireita(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy);
-    if (this.vx > 0) {
-      if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
-        const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
-        if (this.colisaoCom(fantasma)) {
-
-          if(this.tags.has("projetil")){
-            this.cena?.aRemover.push(this);
+    if (pmx >= 0 && pmy >= 0) {
+      if (this.vx > 0) {
+        if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
+          const fantasma = {
+            x: pmx * t + t / 2,
+            y: pmy * t + t / 2,
+            w: t,
+            h: t,
+          };
+          if (this.colisaoCom(fantasma)) {
+            if (this.tags.has("projetil")) {
+              this.cena?.aRemover.push(this);
+            }
+            //this.vx *= -1;
+            this.x = fantasma.x - fantasma.w / 2 - this.w / 2 - 1;
           }
-          //this.vx *= -1;
-          this.x = fantasma.x - fantasma.w / 2 - this.w / 2 - 1;
+          this.cena.ctx.strokeStyle = "red";
+          this.cena.ctx.strokeRect(
+            fantasma.x - t / 2,
+            fantasma.y - t / 2,
+            t,
+            t
+          );
         }
-        this.cena.ctx.strokeStyle = "red";
-        this.cena.ctx.strokeRect(fantasma.x - t / 2, fantasma.y - t / 2, t, t);
       }
     }
   }
   restricoesEsquerda(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy);
-    if (this.vx < 0) {
-      if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
-        const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
-        if (this.colisaoCom(fantasma)) {
-          //this.vx *= -1;
-          this.x = fantasma.x + fantasma.w / 2 + this.w / 2 + 1;
+    if (pmx >= 0 && pmy >= 0) {
+      if (this.vx < 0) {
+        if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
+          const fantasma = {
+            x: pmx * t + t / 2,
+            y: pmy * t + t / 2,
+            w: t,
+            h: t,
+          };
+          if (this.colisaoCom(fantasma)) {
+            //this.vx *= -1;
+            if (this.tags.has("projetil")) {
+              this.cena?.aRemover.push(this);
+            }
+            this.x = fantasma.x + fantasma.w / 2 + this.w / 2 + 1;
+          }
+          this.cena.ctx.strokeStyle = "red";
+          this.cena.ctx.strokeRect(
+            fantasma.x - t / 2,
+            fantasma.y - t / 2,
+            t,
+            t
+          );
         }
-        this.cena.ctx.strokeStyle = "red";
-        this.cena.ctx.strokeRect(fantasma.x - t / 2, fantasma.y - t / 2, t, t);
       }
     }
   }
   restricoesCima(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy)
-    if (this.vy < 0) {
-      if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
-        const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
-        if (this.colisaoCom(fantasma)) {
-          //this.vy *= -1;
-          this.y = fantasma.y + fantasma.h / 2 + this.h / 2 + 1;
+    if (pmx >= 0 && pmy >= 0) {
+      if (this.vy < 0) {
+        if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
+          const fantasma = {
+            x: pmx * t + t / 2,
+            y: pmy * t + t / 2,
+            w: t,
+            h: t,
+          };
+          if (this.colisaoCom(fantasma)) {
+            //this.vy *= -1;
+            if (this.tags.has("projetil")) {
+              this.cena?.aRemover.push(this);
+            }
+            this.y = fantasma.y + fantasma.h / 2 + this.h / 2 + 1;
+          }
+          this.cena.ctx.strokeStyle = "red";
+          this.cena.ctx.strokeRect(
+            fantasma.x - t / 2,
+            fantasma.y - t / 2,
+            t,
+            t
+          );
         }
-        this.cena.ctx.strokeStyle = "red";
-        this.cena.ctx.strokeRect(fantasma.x - t / 2, fantasma.y - t / 2, t, t);
       }
     }
   }
   restricoesBaixo(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy)
-    if (this.vy > 0) {
-      if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
-        const fantasma = { x: pmx * t + t / 2, y: pmy * t + t / 2, w: t, h: t };
-        if (this.colisaoCom(fantasma)) {
-          //this.vy *= -1;
-          this.y = fantasma.y - fantasma.h / 2 - this.h / 2 - 1;
+    if (pmx >= 0 && pmy >= 0) {
+      if (this.vy > 0) {
+        if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
+          const fantasma = {
+            x: pmx * t + t / 2,
+            y: pmy * t + t / 2,
+            w: t,
+            h: t,
+          };
+          if (this.colisaoCom(fantasma)) {
+            //this.vy *= -1;
+            if (this.tags.has("projetil")) {
+              this.cena?.aRemover.push(this);
+            }
+            this.y = fantasma.y - fantasma.h / 2 - this.h / 2 - 1;
+          }
+          this.cena.ctx.strokeStyle = "red";
+          this.cena.ctx.strokeRect(
+            fantasma.x - t / 2,
+            fantasma.y - t / 2,
+            t,
+            t
+          );
         }
-        this.cena.ctx.strokeStyle = "red";
-        this.cena.ctx.strokeRect(fantasma.x - t / 2, fantasma.y - t / 2, t, t);
       }
     }
   }
@@ -128,7 +184,6 @@ export default class Sprite {
     this.mx = Math.floor(this.x / this.cena.mapa.TAMANHO);
     this.my = Math.floor(this.y / this.cena.mapa.TAMANHO);
   }
-
   passo(dt) {
     this.controlar(dt);
     this.mover(dt);

@@ -4,6 +4,7 @@ import SpriteAtaque from "./SpriteAtaque.js";
 
 export default class SpritePersonagem extends Sprite {
   acao(dt) {
+    /*
     const pc = this;
     const config = {
       x: this.x,
@@ -58,7 +59,7 @@ export default class SpritePersonagem extends Sprite {
     });
     ataque.setDuracao(this.MAX_duracaoAtaque);
     ataque.controlar = seguir;
-
+ 
     if (cena.input.comandos.get("ATACAR")) {
       if (this.cooldownAtaque >= this.Max_cooldownAtaque) {
         cena.adicionar(ataque);
@@ -66,7 +67,10 @@ export default class SpritePersonagem extends Sprite {
         //cena.aRemover.push(ataque);
       }
     }
+    */
   }
+  
+  /*
   configuraAtaque({ MAX_duracaoAtaque = 0.5, Max_cooldownAtaque = 1 } = {}) {
     this.atacando = false;
     this.MAX_duracaoAtaque = MAX_duracaoAtaque;
@@ -74,13 +78,14 @@ export default class SpritePersonagem extends Sprite {
     this.Max_cooldownAtaque = Max_cooldownAtaque;
     this.cooldownAtaque = Max_cooldownAtaque;
   }
+  */
   setaAtaque() {
     this.hitbox = [];
-    this.tamanhoEspada = 40;
+    this.tamanhoEspada = 80;
     this.angulo = 0;
     this.va = 8;
     this.cont = 0;
-    const numHitbox = 7;
+    const numHitbox = 5;
     //const cena = this.cena;
     for (let i = 0; i < numHitbox; i++) {
       const xd = new Sprite({
@@ -117,6 +122,8 @@ export default class SpritePersonagem extends Sprite {
       const hb = this.hitbox[i];
       hb.x = this.x + c * r * (i + 1);
       hb.y = this.y + s * r * (i + 1);
+      //hb.vx = 40 * Math.sign(this.x + c * r * (i + 1) - hb.x) * dt;
+      //hb.vy = 40 * Math.sign(this.y + s * r * (i + 1) - hb.y) * dt;
     }
   }
 }

@@ -76,9 +76,10 @@ export default class SpritePersonagem extends Sprite {
   }
   setaAtaque() {
     this.hitbox = [];
-    this.tamanhoEspada = 100;
+    this.tamanhoEspada = 40;
     this.angulo = 0;
-    this.va = 0;
+    this.va = 8;
+    this.cont = 0;
     const numHitbox = 7;
     //const cena = this.cena;
     for (let i = 0; i < numHitbox; i++) {
@@ -94,17 +95,22 @@ export default class SpritePersonagem extends Sprite {
     this.angulo = 0;
   }
   mover(dt) {
-
     this.x = this.x + this.vx * dt;
     this.y = this.y + this.vy * dt;
     this.calculaPosicao();
 
-    this.angulo = this.angulo + this.va * dt;
-    if (this.angulo >= 2 * Math.PI) {
+    /*if (this.angulo < 0) {
       this.angulo = 0;
+      this.va = 0;
+    } else if (this.angulo > Math.PI) {
+      this.angulo = Math.PI;
+      this.va = 0;
     }
-    const c = Math.cos(this.angulo);
-    const s = Math.sin(this.angulo);
+
+    this.angulo = this.angulo + this.va * dt;
+*/
+    const c = Math.cos(this.angulo).toPrecision(2);
+    const s = Math.sin(this.angulo).toPrecision(2);
 
     const r = this.tamanhoEspada / this.hitbox.length;
     for (let i = 0; i < this.hitbox.length; i++) {

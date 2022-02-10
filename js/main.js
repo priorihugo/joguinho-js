@@ -15,9 +15,9 @@ canvas.height = 20 * 32;
 const mixer = new Mixer(10);
 const input = new InputManager();
 const assets = new AssetManager(mixer);
-const c0 = new CenaCarregando();
-const c1 = new CenaJogo();
-const c2 = new CenaFim();
+const c0 = new CenaCarregando(canvas);
+const c1 = new CenaJogo(canvas);
+const c2 = new CenaFim(canvas);
 const game = new Game(canvas, assets, input);
 
 game.adicionarCena("carregando" , c0);

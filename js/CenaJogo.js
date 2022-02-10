@@ -7,12 +7,16 @@ import SpritePersonagem from "./SpritePersonagem.js";
 
 export default class CenaJogo extends Cena {
   quandoColide(a, b) {
-    if(a.tags.has("ataquePc")){
-      if(b.tags.has("enemy")){
+    if (a.tags.has("ataquePc")) {
+      if (b.tags.has("enemy")) {
         this.assets.play("hurt");
-          this.marcaRemocao(b);
+        this.marcaRemocao(b);
       }
-
+    }
+    if (a.tags.has("pc") && b.tags.has("enemy")) {
+      this.marcaRemocao(a);
+      this.marcaRemocao(b);
+      this.game.selecionaCena("fim");
     }
   }
   preparar() {
@@ -52,15 +56,14 @@ export default class CenaJogo extends Cena {
         pc.vy = 0;
       }
       //
-      const va_max = 2;
-      if(cena.input.comandos.get("ATAQUE_ANTIHORARIO")){
+      const va_max = 4;
+      if (cena.input.comandos.get("ATAQUE_ANTIHORARIO")) {
         pc.va = va_max;
-      }else if (cena.input.comandos.get("ATAQUE_HORARIO")){
+      } else if (cena.input.comandos.get("ATAQUE_HORARIO")) {
         pc.va = -va_max;
-      }else{
-        pc.va = 0;
+      } else {
+        // pc.va = 0;
       }
-
     };
     function persegue(dt) {
       this.vx = 600 * Math.sign(pc.x - this.x) * dt;
@@ -110,10 +113,13 @@ export default class CenaJogo extends Cena {
       novoSprite.controlar = persegue;
       cena.adicionar(novoSprite);
     }
+    //this.event = novoInimigoAleatorio;
 
-    this.event = novoInimigoAleatorio;
-    novoInimigoAleatorio();
-    novoInimigoAleatorio();
-    novoInimigoAleatorio();
+    this.ctx.canvas.addEventListener("mousemove", (e) => {
+      const mouseX = e.clientX - cena.ctx.canvas.offsetLeft;
+      const mouseY = e.clientY - cena.ctx.canvas.offsetTop;
+      const angulo = Math.atan2(mouseY - pc.y, mouseX - pc.x).toPrecision(2);
+      pc.angulo = angulo;
+    });
   }
 }

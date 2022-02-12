@@ -41,6 +41,9 @@ assets.carregaImagem("canto5", "assets/terreno/canto5.png");
 assets.carregaImagem("canto6", "assets/terreno/canto6.png");
 assets.carregaImagem("piso", "assets/terreno/piso.png");
 assets.carregaImagem("piso2", "assets/terreno/piso2.png");
+//
+assets.carregaImagem("enemy1" , "assets/personagens/lancelot_.png")
+assets.carregaImagem("pc" , "assets/personagens/arthurPendragon_.png")
 
 input.configurarTeclado({
   ArrowLeft: "MOVE_ESQUERDA",
@@ -48,9 +51,14 @@ input.configurarTeclado({
   ArrowDown: "MOVE_BAIXO",
   ArrowUp: "MOVE_CIMA",
   " ": "PROXIMA_CENA",
-  a: "ATAQUE_HORARIO",
-  d: "ATAQUE_ANTIHORARIO",
-  e: "ATACAR"
+  a: "MOVE_ESQUERDA",
+  d: "MOVE_DIREITA",
+  s: "MOVE_BAIXO",
+  w: "MOVE_CIMA",
+
+  q: "ATAQUE_HORARIO",
+  e: "ATAQUE_ANTIHORARIO"
+
 });
 game.iniciar();
 

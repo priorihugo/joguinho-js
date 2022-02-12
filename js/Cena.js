@@ -36,7 +36,7 @@ export default class Cena {
     if (this.assets.acabou()) {
       this.passo(this.dt);
       this.contagem += this.dt;
-      if (this.contagem >= 5) {
+      if (this.contagem >= 2) {
         this.event(this.dt);
         this.contagem = 0;
       }
@@ -46,6 +46,8 @@ export default class Cena {
     if (this.rodando) this.iniciar();
     this.aRemover = [];
     this.t0 = t;
+
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.heigh)
   }
   iniciar() {
     this.rodando = true;
@@ -72,10 +74,10 @@ export default class Cena {
   }
   quandoColide(a, b) {
     if (a.tags.has("pc") && b.tagas.has("enemy")) {
-      console.log(a.tags[0], b.tags[0]);
-      this.assets.play("hurt");
-      this.marcaRemocao(a);
-      this.marcaRemocao(b);
+      //console.log(a.tags[0], b.tags[0]);
+      //this.assets.play("hurt");
+      //this.marcaRemocao(a);
+      //this.marcaRemocao(b);
     }
   }
   marcaRemocao(sprite) {

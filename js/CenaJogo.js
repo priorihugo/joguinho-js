@@ -4,6 +4,7 @@ import Sprite from "./Sprite.js";
 import mapa1 from "../maps/mapa1.js";
 import mapa2 from "../maps/mapa2.js";
 import SpritePersonagem from "./SpritePersonagem.js";
+import SpriteInimigo from "./SpriteInimigo.js";
 
 export default class CenaJogo extends Cena {
   quandoColide(a, b) {
@@ -26,10 +27,10 @@ export default class CenaJogo extends Cena {
     cena.configuraMapa(cenario01);
     cenario01.carregaMapa(mapa2);
     const pc = new SpritePersonagem({
-      x: 64,
-      y: 64,
-      h: 32,
-      w: 32,
+      x: this.canvas.height/2,
+      y: this.canvas.width/2,
+      h: this?.mapa.TAMANHO,
+      w: 20,
       tags: ["pc"],
     });
     cena.adicionar(pc);
@@ -48,10 +49,8 @@ export default class CenaJogo extends Cena {
       //
       if (cena.input.comandos.get("MOVE_CIMA")) {
         pc.vy = -200;
-        pc.direcao = "cima";
       } else if (cena.input.comandos.get("MOVE_BAIXO")) {
         pc.vy = +200;
-        pc.direcao = "baixo";
       } else {
         pc.vy = 0;
       }
@@ -63,7 +62,7 @@ export default class CenaJogo extends Cena {
       } else if (cena.input.comandos.get("ATAQUE_HORARIO")) {
         pc.va = -va_max;
       } else {
-        // pc.va = 0;
+        pc.va = 0;
       }
       */
     };
@@ -75,21 +74,21 @@ export default class CenaJogo extends Cena {
       this.vx = 600 * Math.sign(alvo.x - this.x) * dt;
       this.vy = 600 * Math.sign(alvo.y - this.y) * dt;
     }
-    /*function atirar(dt){
+    function atirar(dt) {
       this.cooldown += dt;
       const v = 800;
-      if(this.cooldown >= 4){
-
-        const angulo = Math.atan2( pc.y - this.y, pc.x - this.x).toPrecision(2); 
+      if (this.cooldown >= 4) {
+        const angulo = Math.atan2(pc.y - this.y, pc.x - this.x).toPrecision(2);
         const vx = Math.cos(angulo).toPrecision(2) * v;
         const vy = Math.sin(angulo).toPrecision(2) * v;
-        let ww = 0 , hh = 0;
-        if(Math.abs(this.x - pc.x) > Math.abs(this.y - pc.y)){
+        let ww = 0,
+          hh = 0;
+        if (Math.abs(this.x - pc.x) > Math.abs(this.y - pc.y)) {
           ww = 40;
-          hh = 4;    
-        }else{
+          hh = 4;
+        } else {
           ww = 4;
-          hh = 40;  
+          hh = 40;
         }
         const projetil = new Sprite({
           color: "red",
@@ -99,12 +98,12 @@ export default class CenaJogo extends Cena {
           h: hh,
           vx: vx,
           vy: vy,
-          tags: ["projetil"]
+          tags: ["projetil"],
         });
         cena.adicionar(projetil);
         this.cooldown = 0;
       }
-    }*/
+    }
     function novoInimigoAleatorio() {
       let nX;
       let nY;
@@ -136,23 +135,23 @@ export default class CenaJogo extends Cena {
       nY = nY * 32 + 32 / 2;
       nX = nX * 32 + 32 / 2;
 
-      const novoSprite = new Sprite({
+      const novoSprite = new SpriteInimigo({
         x: nX,
         y: nY,
         color: cor,
+        w: 20,
         tags: ["enemy"],
       });
-      //novoSprite.controlar = persegue;
+      novoSprite.controlar = persegue;
       //novoSprite.acao = atirar;
       cena.adicionar(novoSprite);
     }
     this.event = novoInimigoAleatorio;
-
     this.ctx.canvas.addEventListener("mousemove", (e) => {
       const mouseX = e.clientX - cena.ctx.canvas.offsetLeft;
       const mouseY = e.clientY - cena.ctx.canvas.offsetTop;
       const angulo = Math.atan2(mouseY - pc.y, mouseX - pc.x).toPrecision(2);
-      pc.angulo = angulo;
+      pc.angulo = angulo ;
     });
   }
 }

@@ -2,8 +2,8 @@ export default class Sprite {
   constructor({
     x = 0,
     y = 0,
-    h = 30,
-    w = 30,
+    h = 32,
+    w = 20,
     color = "white",
     vx = 0,
     vy = 0,

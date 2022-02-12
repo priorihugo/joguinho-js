@@ -3,7 +3,6 @@ import Sprite from "./Sprite.js";
 import SpriteAtaque from "./SpriteAtaque.js";
 
 export default class SpritePersonagem extends Sprite {
-
   constructor({
     x = 0,
     y = 0,
@@ -14,7 +13,7 @@ export default class SpritePersonagem extends Sprite {
     vy = 0,
     tags = [],
   } = {}) {
-    super({x:x, y:y ,h:h, w:w, color:color, vx:vx, vy:vy, tags:tags,  })
+    super({ x: x, y: y, h: h, w: w, color: color, vx: vx, vy: vy, tags: tags });
 
     this.hitbox = [];
     this.tamanhoEspada = 40;
@@ -23,6 +22,11 @@ export default class SpritePersonagem extends Sprite {
     this.va = 8;
     this.cont = 0;
     this.estado = 0;
+    this.armaconfig = {
+      larguraSprite: 12,
+      alturaSprite: 24,
+
+    }
 
     //this.setaAtaque();
 
@@ -30,7 +34,7 @@ export default class SpritePersonagem extends Sprite {
     this.vQuadro = 7;
 
     this.spriteConfig = {
-      img : this.cena?.assets.getImg("enemy1"),
+      img: this.cena?.assets.getImg("enemy1"),
       fatorCorrecao: 5,
       idle: 0,
       walk: 1,
@@ -122,7 +126,7 @@ export default class SpritePersonagem extends Sprite {
       const xd = new Sprite({
         w: this.tamanhoEspada / numHitbox,
         h: this.tamanhoEspada / numHitbox,
-        color: "blue",
+        color: "red",
         tags: ["ataquePc"],
       });
       this.cena.adicionar(xd);
@@ -134,25 +138,56 @@ export default class SpritePersonagem extends Sprite {
     this.x = this.x + this.vx * dt;
     this.y = this.y + this.vy * dt;
     this.calculaPosicao();
-    
-    this.angulo2 = this.angulo2 + this.va * dt;
 
-    console.log("angulo 1: " + this.angulo);
-    console.log("angulo 2: " + this.angulo2)
+    //this.angulo2 = this.angulo2 + this.va * dt;
 
-    //const x0 = this.x + Math.cos(this.angulo).toPrecision(2) * this.w/2;
-    //const y0 = this.y + Math.sin(this.angulo).toPrecision(2) * this.w/2 ;
+    if (this.angulo > this.angulo2) {
+      if (this.angulo - this.angulo2 > Math.PI) {
+        this.angulo2 -= dt * 4;
+      } else {
+        this.angulo2 += dt * 4;
+      }
+    } else {
+      if (this.angulo - this.angulo2 < -Math.PI) {
+        this.angulo2 += dt * 4;
+      } else {
+        this.angulo2 -= dt * 4;
+      }
+    }
+    if (this.angulo2 >= Math.PI) {
+      this.angulo2 = -Math.PI;
+    } else if (this.angulo2 < -Math.PI) {
+      this.angulo2 = Math.PI;
+    }
+    const x0 = this.x + (Math.cos(this.angulo).toPrecision(2) * this.w/4);
+    const y0 = this.y + (Math.sin(this.angulo).toPrecision(2) * this.h/4);
     const c = Math.cos(this.angulo).toPrecision(2);
     const s = Math.sin(this.angulo).toPrecision(2);
-    
+
     const r = this.tamanhoEspada / this.hitbox.length;
+
+    this.cena.ctx.save();
     for (let i = 0; i < this.hitbox.length; i++) {
       const hb = this.hitbox[i];
-      hb.x = this.x + c * r * (i + 1);
-      hb.y = this.y + s * r * (i + 1);
-      //hb.x = x0 + c * r * (i + 1);
-      //hb.y = y0 + s * r * (i + 1);
+      hb.x = x0 + c * r * (i + 1);
+      hb.y = y0 + s * r * (i + 1);
     }
+    let x = this.angulo
+    this.cena.ctx.translate(x0 , y0)
+    this.cena.ctx.rotate(this.angulo - 3*Math.PI/2);
+    this.cena.ctx.drawImage(this.cena.assets.getImg("arma"),
+    ///source
+    24,
+    0,
+    12,
+    24,
+    ///canvas
+    -6,
+    -40,
+    12,
+    40
+    )
+    this.cena.ctx.restore();
   }
   desenhar(ctx) {
     ctx.fillStyle = this.color;
@@ -164,30 +199,32 @@ export default class SpritePersonagem extends Sprite {
       this.cena.mapa.TAMANHO,
       this.cena.mapa.TAMANHO
     );
+    
     this.gerenciadorDeSprite(ctx);
   }
   gerenciadorDeSprite(ctx) {
-    this.quadro+=this.cena.dt * this.vQuadro;
-    if(this.quadro >= 4){
+    this.quadro += this.cena.dt * this.vQuadro;
+    if (this.quadro >= 4) {
       this.quadro = 0;
     }
     ////
     let acao = this.spriteConfig.idle;
-    if(this.vx > 0 ){
+    if (this.vx > 0) {
       this.estado = 0;
       acao = this.spriteConfig.run;
-    }else if(this.vx < 0){
+    } else if (this.vx < 0) {
       this.estado = 4;
-      acao = this.spriteConfig.run
-    }else if(this.vx = 0){
+      acao = this.spriteConfig.run;
+    } else if ((this.vx = 0)) {
       acao = this.spriteConfig.idle;
     }
     ctx.drawImage(
       this.cena.assets.getImg("pc"),
       //
-      Math.floor(this.quadro + this.estado)*this.spriteConfig.offset + this.spriteConfig.fatorCorrecao,
-      this.spriteConfig.offset*acao,
-      this.spriteConfig.offset - 2*this.spriteConfig.fatorCorrecao,
+      Math.floor(this.quadro + this.estado) * this.spriteConfig.offset +
+        this.spriteConfig.fatorCorrecao,
+      this.spriteConfig.offset * acao,
+      this.spriteConfig.offset - 2 * this.spriteConfig.fatorCorrecao,
       this.spriteConfig.offset,
       //
       this.x - this.w / 2,
@@ -195,5 +232,44 @@ export default class SpritePersonagem extends Sprite {
       this.w,
       this.h
     );
+  }
+  morre() {
+    this.controlar = (dt) => {};
+    this.acao = (dt) => {};
+    this.mover = (dt) => {};
+
+    this.desenhar = function(ctx) {
+      
+      /*ctx.fillStyle = this.color;
+      ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
+      ctx.strokeStyle = "blue";
+      ctx.strokeRect(
+        this.mx * this.cena.mapa.TAMANHO,
+        this.my * this.cena.mapa.TAMANHO,
+        this.cena.mapa.TAMANHO,
+        this.cena.mapa.TAMANHO
+      );
+      */
+      this.quadro += this.cena.dt * this.vQuadro;
+      if (this.quadro >= 7) {
+        this.cena.aRemover.push(this);
+      }
+      ////
+      let acao = this.spriteConfig.death;
+      ctx.drawImage(
+        this.cena.assets.getImg("pc"),
+        //
+        Math.floor(this.quadro + this.estado) * this.spriteConfig.offset +
+          this.spriteConfig.fatorCorrecao,
+        this.spriteConfig.offset * acao,
+        this.spriteConfig.offset - 2 * this.spriteConfig.fatorCorrecao,
+        this.spriteConfig.offset,
+        //
+        this.x - this.w / 2,
+        this.y - this.h / 2,
+        this.w,
+        this.h
+      );
+    };
   }
 }

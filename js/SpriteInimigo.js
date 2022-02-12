@@ -69,4 +69,49 @@ export default class SpriteInimigo extends Sprite {
       this.h
     );
   }
+  morre() {
+
+    console.log(this.vx);
+    const direcao = this.vx > 0 ? 0 : 4;
+
+    this.controlar = (dt) => {};
+    this.acao = (dt) => {};
+    this.mover = (dt) => {};
+    this.tags.clear();
+
+    this.quadro = 0;
+    this.desenhar = (ctx) => {
+      /*
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
+      ctx.strokeStyle = "blue";
+      ctx.strokeRect(
+        this.mx * this.cena.mapa.TAMANHO,
+        this.my * this.cena.mapa.TAMANHO,
+        this.cena.mapa.TAMANHO,
+        this.cena.mapa.TAMANHO
+      );
+      */
+      this.quadro += this.cena.dt * (this.vQuadro -2);  
+      ////
+      let acao = this.spriteConfig.death;
+      ctx.drawImage(
+        this.cena.assets.getImg("enemy1"),
+        //
+        Math.floor(this.quadro + direcao)*this.spriteConfig.offset,
+        this.spriteConfig.offset*acao,
+        this.spriteConfig.offset,
+        this.spriteConfig.offset,
+        //
+        this.x - 32 / 2,
+        this.y - this.h / 2,
+        32,
+        this.h
+      );
+
+      if (this.quadro > 3) {
+        this.cena.aRemover.push(this);
+      }
+    };
+  }
 }

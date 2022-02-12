@@ -12,10 +12,10 @@ const ctx = canvas.getContext("2d");
 canvas.width = 28 * 32;
 canvas.height = 20 * 32;
 
-const mixer = new Mixer(10);
+const mixer = new Mixer(500);
 const input = new InputManager();
 const assets = new AssetManager(mixer);
-const c0 = new CenaCarregando(canvas);
+const c0 = new CenaCarregando(canvas); 
 const c1 = new CenaJogo(canvas);
 const c2 = new CenaFim(canvas);
 const game = new Game(canvas, assets, input);
@@ -42,8 +42,10 @@ assets.carregaImagem("canto6", "assets/terreno/canto6.png");
 assets.carregaImagem("piso", "assets/terreno/piso.png");
 assets.carregaImagem("piso2", "assets/terreno/piso2.png");
 //
-assets.carregaImagem("enemy1" , "assets/personagens/lancelot_.png")
-assets.carregaImagem("pc" , "assets/personagens/arthurPendragon_.png")
+assets.carregaImagem("pc" , "assets/personagens/lancelot_.png")
+assets.carregaImagem("enemy1" , "assets/personagens/arthurPendragon_.png")
+
+assets.carregaImagem("arma" , "assets/personagens/weapons_.png")
 
 input.configurarTeclado({
   ArrowLeft: "MOVE_ESQUERDA",
@@ -62,13 +64,4 @@ input.configurarTeclado({
 });
 game.iniciar();
 
-document.addEventListener("keydown", (e) => {
-  switch (e.key) {
-    case "s":
-      game.iniciar();
-      break;
-    case "S":
-      game.parar();
-      break;
-  }
-});
+

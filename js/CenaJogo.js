@@ -11,13 +11,14 @@ export default class CenaJogo extends Cena {
     if (a.tags.has("ataquePc")) {
       if (b.tags.has("enemy")) {
         this.assets.play("hurt");
-        this.marcaRemocao(b);
+        b?.morre();
+        //this.marcaRemocao(b);
       }
     }
     if (a.tags.has("pc") && b.tags.has("enemy")) {
-      this.marcaRemocao(a);
-      this.marcaRemocao(b);
-      this.game.selecionaCena("fim");
+      //this.marcaRemocao(a);
+      //this.marcaRemocao(b);
+      //this.game.selecionaCena("fim");
     }
   }
   preparar() {
@@ -33,6 +34,7 @@ export default class CenaJogo extends Cena {
       w: 20,
       tags: ["pc"],
     });
+    this._pc = pc;
     cena.adicionar(pc);
     pc.setaAtaque();
     //pc.configuraAtaque();
@@ -54,25 +56,18 @@ export default class CenaJogo extends Cena {
       } else {
         pc.vy = 0;
       }
-      //
-      /*
       const va_max = 4;
       if (cena.input.comandos.get("ATAQUE_ANTIHORARIO")) {
         pc.va = va_max;
       } else if (cena.input.comandos.get("ATAQUE_HORARIO")) {
         pc.va = -va_max;
       } else {
-        pc.va = 0;
+        //pc.va = 0;
       }
-      */
     };
     function persegue(dt) {
       this.vx = 600 * Math.sign(pc.x - this.x) * dt;
       this.vy = 600 * Math.sign(pc.y - this.y) * dt;
-    }
-    function perseguePonto(dt, alvo) {
-      this.vx = 600 * Math.sign(alvo.x - this.x) * dt;
-      this.vy = 600 * Math.sign(alvo.y - this.y) * dt;
     }
     function atirar(dt) {
       this.cooldown += dt;
@@ -146,7 +141,8 @@ export default class CenaJogo extends Cena {
       //novoSprite.acao = atirar;
       cena.adicionar(novoSprite);
     }
-    this.event = novoInimigoAleatorio;
+    //this.event = novoInimigoAleatorio;
+
     this.ctx.canvas.addEventListener("mousemove", (e) => {
       const mouseX = e.clientX - cena.ctx.canvas.offsetLeft;
       const mouseY = e.clientY - cena.ctx.canvas.offsetTop;

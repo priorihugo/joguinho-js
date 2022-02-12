@@ -7,6 +7,14 @@ import SpritePersonagem from "./SpritePersonagem.js";
 import SpriteInimigo from "./SpriteInimigo.js";
 
 export default class CenaJogo extends Cena {
+  constructor(canvas = null, assets = null, input = null) {
+    super(canvas, assets, input);
+
+    this.maxInimigos = 2;
+    this.nInimigos = this.maxInimigos;
+    this.intervalo = 2 / this.maxInimigos;
+  }
+
   quandoColide(a, b) {
     if (a.tags.has("ataquePc")) {
       if (b.tags.has("enemy")) {
@@ -21,20 +29,212 @@ export default class CenaJogo extends Cena {
       //this.game.selecionaCena("fim");
     }
   }
+  passo(dt) {
+    for (const sprite of this.sprites) {
+      sprite.passo(dt);
+    }
+    this.evento(dt);
+  }
+  evento(dt) {
+    //funcoes
+
+    const cena = this;
+
+    function persegue(dt) {
+      this.vx = 600 * Math.sign(cena.pc.x - this.x) * dt;
+      this.vy = 600 * Math.sign(cena.pc.y - this.y) * dt;
+    }
+    function atirar(dt) {
+      this.cooldown += dt;
+      const v = 800;
+      if (this.cooldown >= 4) {
+        const angulo = Math.atan2(
+          cena.pc.y - this.y,
+          cena.pc.x - this.x
+        ).toPrecision(2);
+        const vx = Math.cos(angulo).toPrecision(2) * v;
+        const vy = Math.sin(angulo).toPrecision(2) * v;
+        let ww = 0,
+          hh = 0;
+        if (Math.abs(this.x - cena.pc.x) > Math.abs(this.y - cena.pc.y)) {
+          ww = 40;
+          hh = 4;
+        } else {
+          ww = 4;
+          hh = 40;
+        }
+        const projetil = new Sprite({
+          color: "red",
+          x: this.x,
+          y: this.y,
+          w: ww,
+          h: hh,
+          vx: vx,
+          vy: vy,
+          tags: ["projetil"],
+        });
+        cena.adicionar(projetil);
+        this.cooldown = 0;
+      }
+    }
+    function novoInimigoAleatorio() {
+      let nX;
+      let nY;
+      let novoSprite;
+      do {
+        nX = Math.floor(Math.random() * cena.mapa.COLUNAS);
+        nY = Math.floor(Math.random() * cena.mapa.LINHAS);
+      } while (mapa2[nY][nX] !== 0);
+
+      nY = nY * cena.mapa.TAMANHO + cena.mapa.TAMANHO / 2;
+      nX = nX * cena.mapa.TAMANHO + cena.mapa.TAMANHO / 2;
+
+      let nImg = Math.round(Math.random() * 4);
+      switch (nImg) {
+        case 0:
+          novoSprite = new SpriteInimigo({
+            x: nX,
+            y: nY,
+            w: 20,
+            tags: ["enemy"],
+          });
+          novoSprite.spriteConfig = {
+            img: cena.assets.getImg("orc"),
+            fatorCorrecao: 5,
+            idle: 0,
+            walk: 1,
+            run: 2,
+            turn: 3,
+            hurt: 4,
+            death: 5,
+            offset: 24,
+          };
+          novoSprite.controlar = persegue;
+          break;
+        case 1:
+          novoSprite = new SpriteInimigo({
+            x: nX,
+            y: nY,
+            w: 20,
+            tags: ["enemy"],
+          });
+          novoSprite.spriteConfig = {
+            img: cena.assets.getImg("demon"),
+            fatorCorrecao: 5,
+            idle: 0,
+            walk: 1,
+            run: 2,
+            turn: 3,
+            hurt: 4,
+            death: 5,
+            offset: 24,
+          };
+          novoSprite.controlar = persegue;
+          break;
+        case 2:
+          novoSprite = new SpriteInimigo({
+            x: nX,
+            y: nY,
+            w: 20,
+            tags: ["enemy"],
+          });
+          novoSprite.spriteConfig = {
+            img: cena.assets.getImg("skeleton"),
+            fatorCorrecao: 5,
+            idle: 1,
+            walk: 2,
+            run: 3,
+            turn: 4,
+            hurt: 5,
+            death: 6,
+            offset: 24,
+          };
+          novoSprite.controlar = persegue;
+          novoSprite.acao = atirar;
+          break;
+        case 3:
+          novoSprite = new SpriteInimigo({
+            x: nX,
+            y: nY,
+            w: 20,
+            tags: ["enemy"],
+          });
+          novoSprite.spriteConfig = {
+            img: cena.assets.getImg("goblin"),
+            fatorCorrecao: 5,
+            idle: 0,
+            walk: 1,
+            run: 2,
+            turn: 3,
+            hurt: 4,
+            death: 5,
+            offset: 24,
+          };
+          novoSprite.controlar = persegue;
+
+          break;
+        case 4:
+          novoSprite = new SpriteInimigo({
+            x: nX,
+            y: nY,
+            w: 20,
+            tags: ["enemy"],
+          });
+          novoSprite.spriteConfig = {
+            img: cena.assets.getImg("necromancer"),
+            fatorCorrecao: 5,
+            idle: 0,
+            walk: 1,
+            run: 1,
+            turn: 2,
+            hurt: 3,
+            death: 4,
+            offset: 24,
+          };
+          novoSprite.controlar = persegue;
+          //novoSprite.acao = atirar;
+          break;
+      }
+      cena.adicionar(novoSprite);
+    }
+    ///preparacao do evento
+    this.contagem += dt;
+    if (this.contagem > this.intervalo) {
+      console.log(this.nInimigos);
+      if (this.nInimigos > 0) {
+        novoInimigoAleatorio();
+        this.nInimigos--;
+        this.contagem = 0;
+      } else {
+        if (this.contagem > 20) {
+          this.preparar();
+          console.log("fim do level");
+        }
+      }
+    }
+  }
   preparar() {
     const cena = this;
+
     super.preparar();
+    ///mapa
     const cenario01 = new Mapa();
     cena.configuraMapa(cenario01);
     cenario01.carregaMapa(mapa2);
+
+    ///
+    this.maxInimigos *= 2;
+    this.nInimigos = this.maxInimigos;
+
+    ///sprite personagem
     const pc = new SpritePersonagem({
-      x: this.canvas.height/2,
-      y: this.canvas.width/2,
+      x: this.canvas.height / 2,
+      y: this.canvas.width / 2,
       h: this?.mapa.TAMANHO,
       w: 20,
       tags: ["pc"],
     });
-    this._pc = pc;
+    this.pc = pc;
     cena.adicionar(pc);
     pc.setaAtaque();
     //pc.configuraAtaque();
@@ -65,89 +265,11 @@ export default class CenaJogo extends Cena {
         //pc.va = 0;
       }
     };
-    function persegue(dt) {
-      this.vx = 600 * Math.sign(pc.x - this.x) * dt;
-      this.vy = 600 * Math.sign(pc.y - this.y) * dt;
-    }
-    function atirar(dt) {
-      this.cooldown += dt;
-      const v = 800;
-      if (this.cooldown >= 4) {
-        const angulo = Math.atan2(pc.y - this.y, pc.x - this.x).toPrecision(2);
-        const vx = Math.cos(angulo).toPrecision(2) * v;
-        const vy = Math.sin(angulo).toPrecision(2) * v;
-        let ww = 0,
-          hh = 0;
-        if (Math.abs(this.x - pc.x) > Math.abs(this.y - pc.y)) {
-          ww = 40;
-          hh = 4;
-        } else {
-          ww = 4;
-          hh = 40;
-        }
-        const projetil = new Sprite({
-          color: "red",
-          x: this.x,
-          y: this.y,
-          w: ww,
-          h: hh,
-          vx: vx,
-          vy: vy,
-          tags: ["projetil"],
-        });
-        cena.adicionar(projetil);
-        this.cooldown = 0;
-      }
-    }
-    function novoInimigoAleatorio() {
-      let nX;
-      let nY;
-      let ncor = Math.round(Math.random() * 4);
-      let cor;
-
-      switch (ncor) {
-        case 0:
-          cor = "yellow";
-          break;
-        case 1:
-          cor = "red";
-          break;
-        case 2:
-          cor = "blue";
-          break;
-        case 3:
-          cor = "green";
-          break;
-        case 4:
-          cor = "orange";
-          break;
-      }
-      do {
-        nX = Math.floor(Math.random() * cenario01.COLUNAS);
-        nY = Math.floor(Math.random() * cenario01.LINHAS);
-      } while (mapa2[nY][nX] !== 0);
-
-      nY = nY * 32 + 32 / 2;
-      nX = nX * 32 + 32 / 2;
-
-      const novoSprite = new SpriteInimigo({
-        x: nX,
-        y: nY,
-        color: cor,
-        w: 20,
-        tags: ["enemy"],
-      });
-      novoSprite.controlar = persegue;
-      //novoSprite.acao = atirar;
-      cena.adicionar(novoSprite);
-    }
-    //this.event = novoInimigoAleatorio;
-
     this.ctx.canvas.addEventListener("mousemove", (e) => {
       const mouseX = e.clientX - cena.ctx.canvas.offsetLeft;
       const mouseY = e.clientY - cena.ctx.canvas.offsetTop;
       const angulo = Math.atan2(mouseY - pc.y, mouseX - pc.x).toPrecision(2);
-      pc.angulo = angulo ;
+      cena.pc.angulo = angulo;
     });
   }
 }

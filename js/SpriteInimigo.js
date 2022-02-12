@@ -16,7 +16,7 @@ export default class SpriteInimigo extends Sprite {
     this.quadro = 0;
     this.vQuadro = 7;
     this.spriteConfig = {
-      img : this.cena?.assets.getImg("enemy1"),
+      img : null,
       fatorCorrecao: 5,
       idle: 0,
       walk: 1,
@@ -56,12 +56,12 @@ export default class SpriteInimigo extends Sprite {
       acao = this.spriteConfig.idle;
     }
     ctx.drawImage(
-      this.cena.assets.getImg("enemy1"),
+      this.spriteConfig.img,
       //
       Math.floor(this.quadro + direcao)*this.spriteConfig.offset + this.spriteConfig.fatorCorrecao,
-      this.spriteConfig.offset*acao,
+      this.spriteConfig.offset*acao + this.spriteConfig.fatorCorrecao,
       this.spriteConfig.offset - 2*this.spriteConfig.fatorCorrecao,
-      this.spriteConfig.offset,
+      this.spriteConfig.offset - this.spriteConfig.fatorCorrecao,
       //
       this.x - this.w / 2,
       this.y - this.h / 2,
@@ -70,8 +70,6 @@ export default class SpriteInimigo extends Sprite {
     );
   }
   morre() {
-
-    console.log(this.vx);
     const direcao = this.vx > 0 ? 0 : 4;
 
     this.controlar = (dt) => {};
@@ -96,16 +94,16 @@ export default class SpriteInimigo extends Sprite {
       ////
       let acao = this.spriteConfig.death;
       ctx.drawImage(
-        this.cena.assets.getImg("enemy1"),
+        this.spriteConfig.img,
         //
-        Math.floor(this.quadro + direcao)*this.spriteConfig.offset,
-        this.spriteConfig.offset*acao,
-        this.spriteConfig.offset,
-        this.spriteConfig.offset,
+        Math.floor(this.quadro + direcao)*this.spriteConfig.offset + this.spriteConfig.fatorCorrecao,
+        this.spriteConfig.offset*acao + this.spriteConfig.fatorCorrecao,
+        this.spriteConfig.offset - 2*this.spriteConfig.fatorCorrecao,
+        this.spriteConfig.offset - this.spriteConfig.fatorCorrecao,
         //
-        this.x - 32 / 2,
+        this.x - this.w / 2,
         this.y - this.h / 2,
-        32,
+        this.w,
         this.h
       );
 

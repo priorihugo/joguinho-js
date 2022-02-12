@@ -28,8 +28,8 @@ export default class Sprite {
     });
   }
   desenhar(ctx) {
-    //ctx.fillStyle = this.color;
-    //ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
     ctx.strokeStyle = "blue";
     ctx.strokeRect(
       this.mx * this.cena.mapa.TAMANHO,
@@ -59,7 +59,11 @@ export default class Sprite {
   }
   restricoesDireita(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy);
-    if (pmx >= 0 && pmy >= 0) {
+    if (
+      pmx < this.cena.mapa.COLUNAS &&
+      pmy >= 0 &&
+      pmy < this.cena.mapa.LINHAS
+    ) {
       if (this.vx > 0) {
         if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
           const fantasma = {
@@ -70,6 +74,7 @@ export default class Sprite {
           };
           if (this.colisaoCom(fantasma)) {
             if (this.tags.has("projetil")) {
+              console.log("colisao com parede");
               this.cena?.aRemover.push(this);
             }
             //this.vx *= -1;
@@ -84,11 +89,13 @@ export default class Sprite {
           );
         }
       }
+    } else {
+      this.cena.marcaRemocao(this);
     }
   }
   restricoesEsquerda(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy);
-    if (pmx >= 0 && pmy >= 0) {
+    if (pmx >= 0 && pmy >= 0 && pmy < this.cena.mapa.LINHAS) {
       if (this.vx < 0) {
         if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
           const fantasma = {
@@ -100,6 +107,7 @@ export default class Sprite {
           if (this.colisaoCom(fantasma)) {
             //this.vx *= -1;
             if (this.tags.has("projetil")) {
+              console.log("colisao com parede");
               this.cena?.aRemover.push(this);
             }
             this.x = fantasma.x + fantasma.w / 2 + this.w / 2 + 1;
@@ -113,11 +121,13 @@ export default class Sprite {
           );
         }
       }
+    } else {
+      this.cena.marcaRemocao(this);
     }
   }
   restricoesCima(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy)
-    if (pmx >= 0 && pmy >= 0) {
+    if (pmx >= 0 && pmx < this.cena.mapa.COLUNAS && pmy >= 0) {
       if (this.vy < 0) {
         if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
           const fantasma = {
@@ -129,6 +139,7 @@ export default class Sprite {
           if (this.colisaoCom(fantasma)) {
             //this.vy *= -1;
             if (this.tags.has("projetil")) {
+              console.log("colisao com parede");
               this.cena?.aRemover.push(this);
             }
             this.y = fantasma.y + fantasma.h / 2 + this.h / 2 + 1;
@@ -142,11 +153,17 @@ export default class Sprite {
           );
         }
       }
+    } else {
+      this.cena.marcaRemocao(this);
     }
   }
   restricoesBaixo(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy)
-    if (pmx >= 0 && pmy >= 0) {
+    if (
+      pmx >= 0 &&
+      pmx < this.cena.mapa.COLUNAS &&
+      pmy < this.cena.mapa.LINHAS
+    ) {
       if (this.vy > 0) {
         if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
           const fantasma = {
@@ -158,6 +175,7 @@ export default class Sprite {
           if (this.colisaoCom(fantasma)) {
             //this.vy *= -1;
             if (this.tags.has("projetil")) {
+              console.log("colisao com parede");
               this.cena?.aRemover.push(this);
             }
             this.y = fantasma.y - fantasma.h / 2 - this.h / 2 - 1;
@@ -171,6 +189,8 @@ export default class Sprite {
           );
         }
       }
+    } else {
+      this.cena.marcaRemocao(this);
     }
   }
   controlar(dt) {}

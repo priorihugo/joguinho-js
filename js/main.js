@@ -43,9 +43,14 @@ assets.carregaImagem("piso", "assets/terreno/piso.png");
 assets.carregaImagem("piso2", "assets/terreno/piso2.png");
 //
 assets.carregaImagem("pc" , "assets/personagens/lancelot_.png")
-assets.carregaImagem("enemy1" , "assets/personagens/arthurPendragon_.png")
+assets.carregaImagem("orc" , "assets/personagens/orc_.png")
+assets.carregaImagem("skeleton" , "assets/personagens/skeleton_.png")
+assets.carregaImagem("demon" , "assets/personagens/demon_.png")
+assets.carregaImagem("devil" , "assets/personagens/devil_.png")
+assets.carregaImagem("goblin" , "assets/personagens/goblin_.png")
+assets.carregaImagem("necromancer" , "assets/personagens/necromancer_.png")
 
-assets.carregaImagem("arma" , "assets/personagens/weapons_.png")
+assets.carregaImagem("armas" , "assets/personagens/weapons_.png")
 
 input.configurarTeclado({
   ArrowLeft: "MOVE_ESQUERDA",

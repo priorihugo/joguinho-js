@@ -36,10 +36,6 @@ export default class Cena {
     if (this.assets.acabou()) {
       this.passo(this.dt);
       this.contagem += this.dt;
-      if (this.contagem >= 0.2) {
-        this.event(this.dt);
-        this.contagem = 0;
-      }
       this.checarColisao();
       this.removerSprites();
     }

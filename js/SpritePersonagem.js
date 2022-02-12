@@ -124,6 +124,8 @@ export default class SpritePersonagem extends Sprite {
     const numHitbox = 4;
     for (let i = 0; i < numHitbox; i++) {
       const xd = new Sprite({
+        x: this.x,
+        y: this.y,
         w: this.tamanhoEspada / numHitbox,
         h: this.tamanhoEspada / numHitbox,
         color: "red",
@@ -175,7 +177,7 @@ export default class SpritePersonagem extends Sprite {
     let x = this.angulo
     this.cena.ctx.translate(x0 , y0)
     this.cena.ctx.rotate(this.angulo - 3*Math.PI/2);
-    this.cena.ctx.drawImage(this.cena.assets.getImg("arma"),
+    this.cena.ctx.drawImage(this.cena.assets.getImg("armas"),
     ///source
     24,
     0,
@@ -183,22 +185,23 @@ export default class SpritePersonagem extends Sprite {
     24,
     ///canvas
     -6,
-    -40,
+    -this.tamanhoEspada*1.2,
     12,
-    40
+    this.tamanhoEspada*1.2
     )
     this.cena.ctx.restore();
   }
   desenhar(ctx) {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
-    ctx.strokeStyle = "blue";
+    //ctx.fillStyle = this.color;
+    //ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
+    /*ctx.strokeStyle = "blue";
     ctx.strokeRect(
       this.mx * this.cena.mapa.TAMANHO,
       this.my * this.cena.mapa.TAMANHO,
       this.cena.mapa.TAMANHO,
       this.cena.mapa.TAMANHO
     );
+    */
     
     this.gerenciadorDeSprite(ctx);
   }

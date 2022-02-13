@@ -29,7 +29,7 @@ export default class Sprite {
     });
   }
   desenhar(ctx) {
-    /*
+    
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
     ctx.strokeStyle = "blue";
@@ -39,7 +39,7 @@ export default class Sprite {
       this.cena.mapa.TAMANHO,
       this.cena.mapa.TAMANHO
     );
-    */
+    
   }
   aplicaRestricoes(dt) {
     const t = this.cena.mapa.TAMANHO;
@@ -72,7 +72,7 @@ export default class Sprite {
           };
           if (this.colisaoCom(fantasma)) {
             if (this.tags.has("projetil")) {
-              console.log("colisao com parede");
+              //console.log("colisao com parede");
               this.cena?.aRemover.push(this);
             }
             //this.vx *= -1;
@@ -103,7 +103,7 @@ export default class Sprite {
           if (this.colisaoCom(fantasma)) {
             //this.vx *= -1;
             if (this.tags.has("projetil")) {
-              console.log("colisao com parede");
+              //console.log("colisao com parede");
               this.cena?.aRemover.push(this);
             }
             this.x = fantasma.x + fantasma.w / 2 + this.w / 2 + 1;
@@ -133,7 +133,7 @@ export default class Sprite {
           if (this.colisaoCom(fantasma)) {
             //this.vy *= -1;
             if (this.tags.has("projetil")) {
-              console.log("colisao com parede");
+              //console.log("colisao com parede");
               this.cena?.aRemover.push(this);
             }
             this.y = fantasma.y + fantasma.h / 2 + this.h / 2 + 1;
@@ -166,7 +166,7 @@ export default class Sprite {
           if (this.colisaoCom(fantasma)) {
             //this.vy *= -1;
             if (this.tags.has("projetil")) {
-              console.log("colisao com parede");
+              //console.log("colisao com parede");
               this.cena?.aRemover.push(this);
             }
             this.y = fantasma.y - fantasma.h / 2 - this.h / 2 - 1;

@@ -23,7 +23,7 @@ export default class CenaJogo extends Cena {
 
   }
   desenhar(dt){
-    super.desenhar();
+    super.desenhar(dt);
     this.ctx.fillStyle = "#fb9121"
     this.ctx.font = "20px Impact"
     this.ctx.textAlign = "left"
@@ -38,19 +38,18 @@ export default class CenaJogo extends Cena {
   quandoColide(a, b) {
     if (a.tags.has("ataquePc")) {
       if (b.tags.has("enemy")) {
-        this.assets.play("hurt");
+        this.assets.play("hit1");
         b?.morre();
         this.nInimigosAtivos--;
         this.pontuacao++;
-        //this.marcaRemocao(b);
       }
       if (b.tags.has("projetil")) {
+        this.assets.play("hit2")
         this.marcaRemocao(b);
       }
     }
     if (a.tags.has("pc") && (b.tags.has("enemy") || b.tags.has("projetil"))) {
-      //this.marcaRemocao(a);
-      //this.marcaRemocao(b);
+      this.assets.play("hit3")
       this.pc.hit();
     }
   }
@@ -73,6 +72,7 @@ export default class CenaJogo extends Cena {
       this.pc.morre();
     }
     if(this.pc.morreu){
+      this.assets.play("perdeu")
       this.resetaLvl();
       this.game.selecionaCena("fim");
     }
@@ -88,6 +88,7 @@ export default class CenaJogo extends Cena {
     }
     function flecha(dt) {
       this.cooldown += dt;
+
       const v = 1600;
       if (this.cooldown >= 4) {
         const angulo = Math.atan2(
@@ -105,6 +106,7 @@ export default class CenaJogo extends Cena {
           ww = 4;
           hh = 40;
         }
+        
         const projetil = new SpriteAtaque({
           color: "red",
           x: this.x,
@@ -371,7 +373,6 @@ export default class CenaJogo extends Cena {
     ///preparacao do evento
     this.contagem += dt;
     if (this.contagem > this.intervalo) {
-      //console.log(this.nInimigos);
       if (this.nInimigos > 0) {
         novoInimigoAleatorio();
         this.nInimigos--;

@@ -159,7 +159,7 @@ export default class SpritePersonagem extends Sprite {
     this.cena.ctx.restore();
   }
   desenhar(ctx) {
-    super.desenhar(ctx);
+    //super.desenhar(ctx);
     this.gerenciadorDeSprite(ctx);
   }
   gerenciadorDeSprite(ctx) {

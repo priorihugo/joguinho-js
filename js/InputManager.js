@@ -6,7 +6,7 @@ export default class InputManager{
     configurarTeclado(acoes){
         for (const tecla in acoes) {       
             const comando = acoes[tecla];
-            console.log(tecla, comando);
+            //console.log(tecla, comando);
             this.comandos.set(comando , false);
             this.teclas.set(tecla , comando);
         }

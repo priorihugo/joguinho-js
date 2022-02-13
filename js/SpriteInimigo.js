@@ -31,7 +31,7 @@ export default class SpriteInimigo extends Sprite {
     }
   }
   desenhar(ctx) {
-    super.desenhar(ctx);
+    //super.desenhar(ctx);
     this.gerenciadorDeSprite(ctx);
   }
   gerenciadorDeSprite(ctx) {

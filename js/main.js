@@ -26,6 +26,11 @@ game.adicionarCena("fim" , c2);
 
 assets.carregaAudio("boom", "assets/sons/boom.wav");
 assets.carregaAudio("hurt", "assets/sons/hurt.wav");
+assets.carregaAudio("perdeu", "assets/sons/perdeu.wav");
+assets.carregaAudio("baque", "assets/sons/baque.wav");
+assets.carregaAudio("hit1", "assets/sons/hit1.wav");
+assets.carregaAudio("hit2", "assets/sons/hit2.wav");
+assets.carregaAudio("hit3", "assets/sons/hit3.wav");
 
 assets.carregaImagem("paredeL1", "assets/terreno/paredeL1.png");
 assets.carregaImagem("paredeL2", "assets/terreno/paredeL2.png");

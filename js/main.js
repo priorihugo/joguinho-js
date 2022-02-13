@@ -9,8 +9,8 @@ import CenaFim from "./CenaFim.js";
 ///canvas config
 const canvas = document.body.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-canvas.width = 28 * 32;
-canvas.height = 20 * 32;
+canvas.width = 32 * 32;
+canvas.height = 21 * 32;
 
 const mixer = new Mixer(500);
 const input = new InputManager();
@@ -41,7 +41,10 @@ assets.carregaImagem("canto5", "assets/terreno/canto5.png");
 assets.carregaImagem("canto6", "assets/terreno/canto6.png");
 assets.carregaImagem("piso", "assets/terreno/piso.png");
 assets.carregaImagem("piso2", "assets/terreno/piso2.png");
-//
+
+assets.carregaImagem("floresta", "assets/terreno/forest_.png");
+assets.carregaImagem("florestaDecoracao", "assets/terreno/forestDecoration_0.png");
+
 assets.carregaImagem("pc" , "assets/personagens/lancelot_.png")
 assets.carregaImagem("orc" , "assets/personagens/orc_.png")
 assets.carregaImagem("skeleton" , "assets/personagens/skeleton_.png")
@@ -52,6 +55,7 @@ assets.carregaImagem("necromancer" , "assets/personagens/necromancer_.png")
 
 assets.carregaImagem("armas" , "assets/personagens/weapons_.png")
 assets.carregaImagem("arco" , "assets/personagens/arco.png")
+assets.carregaImagem("fogo" , "assets/personagens/fire_.png")
 
 input.configurarTeclado({
   ArrowLeft: "MOVE_ESQUERDA",

@@ -31,7 +31,7 @@ export default class SpriteInimigo extends Sprite {
     }
   }
   desenhar(ctx) {
-    //super.desenhar(ctx);
+    super.desenhar(ctx);
     this.gerenciadorDeSprite(ctx);
   }
   gerenciadorDeSprite(ctx) {
@@ -67,6 +67,8 @@ export default class SpriteInimigo extends Sprite {
   }
   desenhaArma(ctx){
     const posicao = this.vx>0? this.w/2 : -this.w
+
+    
     ctx.drawImage(
       this.armaConfig.img,
       //

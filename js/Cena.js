@@ -19,6 +19,7 @@ export default class Cena {
       sprt.aplicaRestricoes();
       sprt.desenhar(this.ctx);
     }
+    this.ctx.clearRect(0,0,this.canvas.width,this.canvas.heigh)
   }
   adicionar(sprite) {
     sprite.cena = this;
@@ -35,7 +36,7 @@ export default class Cena {
     this.desenhar(this.dt);
     if (this.assets.acabou()) {
       this.passo(this.dt);
-      this.contagem += this.dt;
+      //this.contagem += this.dt;
       this.checarColisao();
       this.removerSprites();
     }

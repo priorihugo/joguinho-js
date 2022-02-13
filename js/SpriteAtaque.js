@@ -41,7 +41,7 @@ export default class SpriteAtaque extends Sprite {
     }
   }
   desenhar(ctx) {
-    //super.desenhar(ctx);
+    super.desenhar(ctx);
     let maior = this.h;
     let menor = this.w;
     if (this.spriteConfig.img != null) {
@@ -50,6 +50,7 @@ export default class SpriteAtaque extends Sprite {
       if (this.h < this.w) {
         maior = this.w;
         menor = this.h;
+
         ctx.rotate(Math.PI / 2);
       }
       ctx.drawImage(

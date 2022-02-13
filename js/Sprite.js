@@ -15,6 +15,7 @@ export default class Sprite {
     this.w = w;
     this.vx = vx;
     this.vy = vy;
+    this.vMax = 800;
     this.color = color;
     this.cena = null;
     this.mx = null;
@@ -28,6 +29,7 @@ export default class Sprite {
     });
   }
   desenhar(ctx) {
+    /*
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
     ctx.strokeStyle = "blue";
@@ -37,6 +39,7 @@ export default class Sprite {
       this.cena.mapa.TAMANHO,
       this.cena.mapa.TAMANHO
     );
+    */
   }
   aplicaRestricoes(dt) {
     const t = this.cena.mapa.TAMANHO;
@@ -59,11 +62,6 @@ export default class Sprite {
   }
   restricoesDireita(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy);
-    if (
-      pmx < this.cena.mapa.COLUNAS &&
-      pmy >= 0 &&
-      pmy < this.cena.mapa.LINHAS
-    ) {
       if (this.vx > 0) {
         if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
           const fantasma = {
@@ -89,13 +87,11 @@ export default class Sprite {
           );
         }
       }
-    } else {
-      this.cena.marcaRemocao(this);
-    }
+    
   }
   restricoesEsquerda(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy);
-    if (pmx >= 0 && pmy >= 0 && pmy < this.cena.mapa.LINHAS) {
+    //if (pmx >= 0 && pmy >= 0 && pmy < this.cena.mapa.LINHAS) 
       if (this.vx < 0) {
         if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
           const fantasma = {
@@ -121,13 +117,11 @@ export default class Sprite {
           );
         }
       }
-    } else {
-      this.cena.marcaRemocao(this);
-    }
+    
   }
   restricoesCima(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy)
-    if (pmx >= 0 && pmx < this.cena.mapa.COLUNAS && pmy >= 0) {
+    //if (pmx >= 0 && pmx < this.cena.mapa.COLUNAS && pmy >= 0) {
       if (this.vy < 0) {
         if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
           const fantasma = {
@@ -152,18 +146,15 @@ export default class Sprite {
             t
           );
         }
-      }
-    } else {
-      this.cena.marcaRemocao(this);
     }
   }
   restricoesBaixo(t, pmx, pmy) {
     //console.log("[pmx]" + pmx + "[pmy]" + pmy)
-    if (
+    /*if (
       pmx >= 0 &&
       pmx < this.cena.mapa.COLUNAS &&
       pmy < this.cena.mapa.LINHAS
-    ) {
+    ) */
       if (this.vy > 0) {
         if (this.cena.mapa.quadrados[pmy][pmx] != 0) {
           const fantasma = {
@@ -188,9 +179,7 @@ export default class Sprite {
             t
           );
         }
-      }
-    } else {
-      this.cena.marcaRemocao(this);
+      
     }
   }
   controlar(dt) {}

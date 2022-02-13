@@ -25,28 +25,30 @@ export default class Mapa {
     }
   }
   desenhar(ctx) {
-   
     for (let l = 0; l < this.LINHAS; l++) {
       for (let c = 0; c < this.COLUNAS; c++) {
-
-
-        let img = this.cena.assets.getImg("piso2");
+        let asx = 0,
+          asy = 0,
+          bsx = 0,
+          bsy = 0,
+          sh = 16,
+          sw = 16;
+        let img = this.cena.assets.getImg("floresta");
+        let img2 = this.cena.assets.getImg("florestaDecoracao");
         ctx.fillStyle = "grey";
-
-        ctx.fillRect(
-          c * this.TAMANHO,
-          l * this.TAMANHO,
-          this.TAMANHO,
-          this.TAMANHO
-        );
         ctx.drawImage(
           img,
+          //
+          2 * sw,
+          30 * sh,
+          sw,
+          sh,
           c * this.TAMANHO,
           l * this.TAMANHO,
           this.TAMANHO,
           this.TAMANHO
         );
-        
+
         switch (this.quadrados[l][c]) {
           case 1:
             img = this.cena.assets.getImg("paredeL1");
@@ -84,9 +86,93 @@ export default class Mapa {
           case 12:
             img = this.cena.assets.getImg("canto6");
             break;
+          case 14:
+            img = this.cena.assets.getImg("floresta");
+            asx = 2;
+            asy = 2;
+            break;
+          case 15:
+            img = this.cena.assets.getImg("floresta");
+            asx = 3;
+            asy = 1;
+            break;
+          case 16:
+            img = this.cena.assets.getImg("floresta");
+            asx = 2;
+            asy = 1;
+            break;
+          case 17:
+            img = this.cena.assets.getImg("floresta");
+            asx = 5;
+            asy = 2;
+            break;
+          case 18:
+            img = this.cena.assets.getImg("floresta");
+            asx = 3;
+            asy = 2;
+            break;
+          case 19:
+            img = this.cena.assets.getImg("floresta");
+            asx = 1;
+            asy = 1;
+            break;
+
+          case 20:
+            img = this.cena.assets.getImg("floresta");
+            asx = 1;
+            asy = 2;
+            break;
+          case 21:
+            img = this.cena.assets.getImg("floresta");
+            asx = 6;
+            asy = 2;
+            break;
+          case 22:
+            //arvore 1 baixo
+            img = this.cena.assets.getImg("florestaDecoracao");
+            asx = 2;
+            asy = 4;
+            break;
+          case 23:
+            //arvore 1 cima
+            img = this.cena.assets.getImg("florestaDecoracao");
+            asx = 2;
+            asy = 3;
+            break;
+          case 24:
+            //pedra 1
+            img = this.cena.assets.getImg("florestaDecoracao");
+            asx = 4;
+            asy = 5;
+            break;
+          case 25:
+            //pedra 1
+            img = this.cena.assets.getImg("florestaDecoracao");
+            asx = 5;
+            asy = 5;
+            break;
+          case 26:
+            //pedra 1
+            img = this.cena.assets.getImg("florestaDecoracao");
+            asx = 4;
+            asy = 6;
+            break;
+
+          case 27:
+            //pedra 1
+            img = this.cena.assets.getImg("florestaDecoracao");
+            asx = 5;
+            asy = 6;
+            break;
         }
         ctx.drawImage(
           img,
+          //
+          asx * sw,
+          asy * sh,
+          sw,
+          sh,
+          //
           c * this.TAMANHO,
           l * this.TAMANHO,
           this.TAMANHO,

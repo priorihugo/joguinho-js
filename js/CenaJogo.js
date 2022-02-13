@@ -24,7 +24,7 @@ export default class CenaJogo extends Cena {
   }
   desenhar(dt){
     super.desenhar();
-    this.ctx.fillStyle = "purple"
+    this.ctx.fillStyle = "#fb9121"
     this.ctx.font = "20px Impact"
     this.ctx.textAlign = "left"
     this.ctx.fillText("Pontuaçao: " + this.pontuacao , 20 , 20);
@@ -55,11 +55,13 @@ export default class CenaJogo extends Cena {
     }
   }
   novoLvl() {
+    this.pc.hp++;
     this.maxInimigos *= 2;
     this.nInimigos = this.maxInimigos;
     this.nInimigosAtivos = this.maxInimigos;
     this.contagem = 0;
     this.lvl++;
+    
   }
   passo(dt) {
     for (const sprite of this.sprites) {
@@ -367,10 +369,6 @@ export default class CenaJogo extends Cena {
     }
 
     ///preparacao do evento
-    if(this.pontuacao >= this.limite){
-      this.pc.hp++;
-      this.limite+=2;
-    }
     this.contagem += dt;
     if (this.contagem > this.intervalo) {
       //console.log(this.nInimigos);
@@ -393,17 +391,11 @@ export default class CenaJogo extends Cena {
     const cena = this;
     super.preparar();
 
-    this.pontuacao = 0;
-    this.lvl = 0; 
-    this.limite = 2*this.maxInimigos;
+    
     ///mapa
     const cenario01 = new Mapa();
     cena.configuraMapa(cenario01);
     cenario01.carregaMapa(mapa2);
-
-    ///
-    this.novoLvl();
-
     ///sprite personagem
     const pc = new SpritePersonagem({
       x: this.canvas.width / 2,
@@ -443,6 +435,11 @@ export default class CenaJogo extends Cena {
         //pc.va = 0;
       }
     };
+    this.novoLvl();
+    this.pontuacao = 0;
+    this.lvl = 0; 
+    this.limite = 2*this.maxInimigos;
+    
     this.ctx.canvas.addEventListener("mousemove", (e) => {
       const mouseX = e.clientX - cena.ctx.canvas.offsetLeft;
       const mouseY = e.clientY - cena.ctx.canvas.offsetTop;

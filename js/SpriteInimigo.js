@@ -26,17 +26,12 @@ export default class SpriteInimigo extends Sprite {
       death: 5,
       offset: 24,
     };
+
+    this.armaConfig = {
+    }
   }
   desenhar(ctx) {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
-    ctx.strokeStyle = "blue";
-    ctx.strokeRect(
-      this.mx * this.cena.mapa.TAMANHO,
-      this.my * this.cena.mapa.TAMANHO,
-      this.cena.mapa.TAMANHO,
-      this.cena.mapa.TAMANHO
-    );
+    //super.desenhar(ctx);
     this.gerenciadorDeSprite(ctx);
   }
   gerenciadorDeSprite(ctx) {
@@ -68,6 +63,23 @@ export default class SpriteInimigo extends Sprite {
       this.w,
       this.h
     );
+    this.desenhaArma(ctx)
+  }
+  desenhaArma(ctx){
+    const posicao = this.vx>0? this.w/2 : -this.w
+    ctx.drawImage(
+      this.armaConfig.img,
+      //
+      this.armaConfig.qualidade*this.armaConfig.larguraSprite,
+      this.armaConfig.tipo*this.armaConfig.alturaSprite,
+      this.armaConfig.larguraSprite,
+      this.armaConfig.alturaSprite,
+      //
+      this.x + posicao,
+      this.y - this.h / 2,
+      this.armaConfig.larguraSprite,
+      this.armaConfig.alturaSprite
+    );
   }
   morre() {
     const direcao = this.vx > 0 ? 0 : 4;
@@ -75,6 +87,7 @@ export default class SpriteInimigo extends Sprite {
     this.controlar = (dt) => {};
     this.acao = (dt) => {};
     this.mover = (dt) => {};
+    this.desenhaArma = (ctx) =>{};
     this.tags.clear();
 
     this.quadro = 0;

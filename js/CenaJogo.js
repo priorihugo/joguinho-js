@@ -5,6 +5,7 @@ import mapa1 from "../maps/mapa1.js";
 import mapa2 from "../maps/mapa2.js";
 import SpritePersonagem from "./SpritePersonagem.js";
 import SpriteInimigo from "./SpriteInimigo.js";
+import SpriteAtaque from "./SpriteAtaque.js";
 
 export default class CenaJogo extends Cena {
   constructor(canvas = null, assets = null, input = null) {
@@ -13,6 +14,7 @@ export default class CenaJogo extends Cena {
     this.maxInimigos = 2;
     this.nInimigos = this.maxInimigos;
     this.intervalo = 2 / this.maxInimigos;
+    this.nInimigosAtivos = this.maxInimigos;
   }
 
   quandoColide(a, b) {
@@ -20,7 +22,11 @@ export default class CenaJogo extends Cena {
       if (b.tags.has("enemy")) {
         this.assets.play("hurt");
         b?.morre();
+        this.nInimigosAtivos--;
         //this.marcaRemocao(b);
+      }
+      if(b.tags.has("projetil")){
+        this.marcaRemocao(b)
       }
     }
     if (a.tags.has("pc") && b.tags.has("enemy")) {
@@ -46,14 +52,14 @@ export default class CenaJogo extends Cena {
     }
     function atirar(dt) {
       this.cooldown += dt;
-      const v = 800;
+      const v = 200;
       if (this.cooldown >= 4) {
         const angulo = Math.atan2(
           cena.pc.y - this.y,
           cena.pc.x - this.x
         ).toPrecision(2);
-        const vx = Math.cos(angulo).toPrecision(2) * v;
-        const vy = Math.sin(angulo).toPrecision(2) * v;
+        const vx = Math.cos(angulo).toPrecision(2)*v *dt;
+        const vy = Math.sin(angulo).toPrecision(2)*v *dt;
         let ww = 0,
           hh = 0;
         if (Math.abs(this.x - cena.pc.x) > Math.abs(this.y - cena.pc.y)) {
@@ -63,7 +69,7 @@ export default class CenaJogo extends Cena {
           ww = 4;
           hh = 40;
         }
-        const projetil = new Sprite({
+        const projetil = new SpriteAtaque({
           color: "red",
           x: this.x,
           y: this.y,
@@ -73,6 +79,15 @@ export default class CenaJogo extends Cena {
           vy: vy,
           tags: ["projetil"],
         });
+        projetil.spriteConfig = {
+          img: cena.assets.getImg("arco"),
+          sx: 0,
+          sy: 0,
+          sw: 12,
+          sh: 24,
+          w: ww,
+          h: hh,
+        }
         cena.adicionar(projetil);
         this.cooldown = 0;
       }
@@ -109,6 +124,13 @@ export default class CenaJogo extends Cena {
             death: 5,
             offset: 24,
           };
+          novoSprite.armaConfig = {
+            img: cena.assets.getImg("armas"),
+            tipo: 2,
+            qualidade: 2,
+            larguraSprite: 12,
+            alturaSprite: 24,
+          };
           novoSprite.controlar = persegue;
           break;
         case 1:
@@ -129,6 +151,13 @@ export default class CenaJogo extends Cena {
             death: 5,
             offset: 24,
           };
+          novoSprite.armaConfig = {
+            img: cena.assets.getImg("armas"),
+            tipo: 1,
+            qualidade: 2,
+            larguraSprite: 12,
+            alturaSprite: 24,
+          };
           novoSprite.controlar = persegue;
           break;
         case 2:
@@ -148,6 +177,13 @@ export default class CenaJogo extends Cena {
             hurt: 5,
             death: 6,
             offset: 24,
+          };
+          novoSprite.armaConfig = {
+            img: cena.assets.getImg("arco"),
+            tipo: 0,
+            qualidade: 1,
+            larguraSprite: 12,
+            alturaSprite: 24,
           };
           novoSprite.controlar = persegue;
           novoSprite.acao = atirar;
@@ -170,6 +206,13 @@ export default class CenaJogo extends Cena {
             death: 5,
             offset: 24,
           };
+          novoSprite.armaConfig = {
+            img: cena.assets.getImg("armas"),
+            tipo: 1,
+            qualidade: 2,
+            larguraSprite: 12,
+            alturaSprite: 24,
+          };
           novoSprite.controlar = persegue;
 
           break;
@@ -191,24 +234,31 @@ export default class CenaJogo extends Cena {
             death: 4,
             offset: 24,
           };
+          novoSprite.armaConfig = {
+            img: cena.assets.getImg("armas"),
+            tipo: 3,
+            qualidade: 2,
+            larguraSprite: 12,
+            alturaSprite: 24,
+          };
           novoSprite.controlar = persegue;
           //novoSprite.acao = atirar;
           break;
       }
       cena.adicionar(novoSprite);
     }
+
     ///preparacao do evento
     this.contagem += dt;
     if (this.contagem > this.intervalo) {
-      console.log(this.nInimigos);
+      //console.log(this.nInimigos);
       if (this.nInimigos > 0) {
         novoInimigoAleatorio();
         this.nInimigos--;
         this.contagem = 0;
       } else {
-        if (this.contagem > 20) {
+        if(this.nInimigosAtivos === 0 ){
           this.preparar();
-          console.log("fim do level");
         }
       }
     }
@@ -225,6 +275,8 @@ export default class CenaJogo extends Cena {
     ///
     this.maxInimigos *= 2;
     this.nInimigos = this.maxInimigos;
+    this.nInimigosAtivos = this.maxInimigos;
+    this.contagem = 0;
 
     ///sprite personagem
     const pc = new SpritePersonagem({

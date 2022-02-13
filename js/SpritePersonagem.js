@@ -145,15 +145,15 @@ export default class SpritePersonagem extends Sprite {
 
     if (this.angulo > this.angulo2) {
       if (this.angulo - this.angulo2 > Math.PI) {
-        this.angulo2 -= dt * 4;
+        this.angulo2 -= dt * 2;
       } else {
-        this.angulo2 += dt * 4;
+        this.angulo2 += dt * 2;
       }
     } else {
       if (this.angulo - this.angulo2 < -Math.PI) {
-        this.angulo2 += dt * 4;
+        this.angulo2 += dt * 2;
       } else {
-        this.angulo2 -= dt * 4;
+        this.angulo2 -= dt * 2;
       }
     }
     if (this.angulo2 >= Math.PI) {
@@ -161,11 +161,11 @@ export default class SpritePersonagem extends Sprite {
     } else if (this.angulo2 < -Math.PI) {
       this.angulo2 = Math.PI;
     }
-    const x0 = this.x + (Math.cos(this.angulo).toPrecision(2) * this.w/4);
-    const y0 = this.y + (Math.sin(this.angulo).toPrecision(2) * this.h/4);
-    const c = Math.cos(this.angulo).toPrecision(2);
-    const s = Math.sin(this.angulo).toPrecision(2);
-
+    const x0 = this.x + (Math.cos(this.angulo2).toPrecision(2) * this.w/4);
+    const y0 = this.y + (Math.sin(this.angulo2).toPrecision(2) * this.h/4);
+    const c = Math.cos(this.angulo2).toPrecision(2);
+    const s = Math.sin(this.angulo2).toPrecision(2);
+ 
     const r = this.tamanhoEspada / this.hitbox.length;
 
     this.cena.ctx.save();
@@ -176,7 +176,7 @@ export default class SpritePersonagem extends Sprite {
     }
     let x = this.angulo
     this.cena.ctx.translate(x0 , y0)
-    this.cena.ctx.rotate(this.angulo - 3*Math.PI/2);
+    this.cena.ctx.rotate(this.angulo2 - 3*Math.PI/2);
     this.cena.ctx.drawImage(this.cena.assets.getImg("armas"),
     ///source
     24,
@@ -192,17 +192,7 @@ export default class SpritePersonagem extends Sprite {
     this.cena.ctx.restore();
   }
   desenhar(ctx) {
-    //ctx.fillStyle = this.color;
-    //ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
-    /*ctx.strokeStyle = "blue";
-    ctx.strokeRect(
-      this.mx * this.cena.mapa.TAMANHO,
-      this.my * this.cena.mapa.TAMANHO,
-      this.cena.mapa.TAMANHO,
-      this.cena.mapa.TAMANHO
-    );
-    */
-    
+    //super.desenhar(ctx);
     this.gerenciadorDeSprite(ctx);
   }
   gerenciadorDeSprite(ctx) {

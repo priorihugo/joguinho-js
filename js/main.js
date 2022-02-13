@@ -51,6 +51,7 @@ assets.carregaImagem("goblin" , "assets/personagens/goblin_.png")
 assets.carregaImagem("necromancer" , "assets/personagens/necromancer_.png")
 
 assets.carregaImagem("armas" , "assets/personagens/weapons_.png")
+assets.carregaImagem("arco" , "assets/personagens/arco.png")
 
 input.configurarTeclado({
   ArrowLeft: "MOVE_ESQUERDA",

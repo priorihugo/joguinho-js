@@ -29,7 +29,7 @@ export default class Sprite {
     });
   }
   desenhar(ctx) {
-    
+    /*
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x - this.w / 2, this.y - this.h / 2, this.w, this.h);
     ctx.strokeStyle = "blue";
@@ -38,8 +38,7 @@ export default class Sprite {
       this.my * this.cena.mapa.TAMANHO,
       this.cena.mapa.TAMANHO,
       this.cena.mapa.TAMANHO
-    );
-    
+    );*/
   }
   aplicaRestricoes(dt) {
     const t = this.cena.mapa.TAMANHO;
@@ -78,6 +77,7 @@ export default class Sprite {
             //this.vx *= -1;
             this.x = fantasma.x - fantasma.w / 2 - this.w / 2 - 1;
           }
+          /*
           this.cena.ctx.strokeStyle = "red";
           this.cena.ctx.strokeRect(
             fantasma.x - t / 2,
@@ -85,6 +85,7 @@ export default class Sprite {
             t,
             t
           );
+          */
         }
       }
     
@@ -108,6 +109,7 @@ export default class Sprite {
             }
             this.x = fantasma.x + fantasma.w / 2 + this.w / 2 + 1;
           }
+          /*
           this.cena.ctx.strokeStyle = "red";
           this.cena.ctx.strokeRect(
             fantasma.x - t / 2,
@@ -115,6 +117,7 @@ export default class Sprite {
             t,
             t
           );
+          */
         }
       }
     
@@ -138,6 +141,7 @@ export default class Sprite {
             }
             this.y = fantasma.y + fantasma.h / 2 + this.h / 2 + 1;
           }
+          /*
           this.cena.ctx.strokeStyle = "red";
           this.cena.ctx.strokeRect(
             fantasma.x - t / 2,
@@ -145,6 +149,7 @@ export default class Sprite {
             t,
             t
           );
+          */
         }
     }
   }
@@ -171,6 +176,7 @@ export default class Sprite {
             }
             this.y = fantasma.y - fantasma.h / 2 - this.h / 2 - 1;
           }
+          /*
           this.cena.ctx.strokeStyle = "red";
           this.cena.ctx.strokeRect(
             fantasma.x - t / 2,
@@ -178,6 +184,7 @@ export default class Sprite {
             t,
             t
           );
+          */
         }
       
     }

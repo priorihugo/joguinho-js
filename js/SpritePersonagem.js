@@ -27,7 +27,7 @@ export default class SpritePersonagem extends Sprite {
       larguraSprite: 12,
       alturaSprite: 24,
     };
-    this.hp = 4;
+    this.hp = 1;
     this.executando = false;
     this.morreu = false
 

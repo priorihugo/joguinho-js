@@ -10,7 +10,7 @@ variedade de açoes dos inimigos, variedade de acoes do personagem, um mapa melh
 sprites fugindo do mapa, ajuste de restricao no mapa, organizar melhor o tileset
 
 Codigo desenvolvido em colaboração com o professor Igor Knop na disciplina DCC138: Aspectos de Linguagens de Programação I
-Universidade Federak de Juiz de fora
+Universidade Federal de Juiz de fora
 
 Agradecimentos as artes e assets
 

@@ -49,6 +49,7 @@ export default class Mapa {
           this.TAMANHO
         );
 
+        //TODO:: mudar esse switch e estrutura de imagens pra um array
         switch (this.quadrados[l][c]) {
           case 1:
             img = this.cena.assets.getImg("paredeL1");
